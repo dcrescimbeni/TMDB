@@ -19,7 +19,8 @@
     "start": "concurrently 'npm run server' 'npm run client'",
     "server": "nodemon api/server.js",
     "client": "react-scripts start",
-    "build": "react-scripts build"
+    "build": "react-scripts build",
+    "test": "mocha"
   },
   "proxy": "http://localhost:3001",
   "eslintConfig": {
@@ -42,6 +43,7 @@
   },
   "devDependencies": {
     "chai": "^4.3.6",
+    "chai-as-promised": "^7.1.1",
     "concurrently": "^6.4.0",
     "mocha": "^9.2.1",
     "nodemon": "^2.0.15"

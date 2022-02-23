@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const volleyball = require('volleyball');
 const db = require('./models/_db');
+// eslint-disable-next-line no-unused-vars
 const models = require('./models/index');
 
 const app = express();

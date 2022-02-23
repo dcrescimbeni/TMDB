@@ -1,6 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const volleyball = require('volleyball');
+const db = require('./models/_db');
+const models = require('./models/index');
 
 const app = express();
 
@@ -14,6 +16,8 @@ app.use((err, req, res, next) => {
   res.status(500).send(err.message);
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server up on port ${process.env.PORT}`);
+db.sync({ force: true }).then(() => {
+  app.listen(3001, () => {
+    console.log(`Server up on port`);
+  });
 });

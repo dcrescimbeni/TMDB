@@ -1,5 +1,5 @@
 const express = require('express');
-// const authController = require('../controllers/authController');
+const authController = require('../controllers/authController');
 const authRouter = express.Router();
 const passport = require('passport');
 
@@ -13,11 +13,7 @@ authRouter.post(
   })
 );
 
-authRouter.get('/login', (req, res, next) => {
-  res.send(`login page`);
-});
-authRouter.get('/secret', (req, res, next) => {
-  res.status(205).send(`You've accessed the chamber of forbidden secrets`);
-});
+authRouter.get('/login', authController.loginGet);
+authRouter.get('/secret', authController.secretGet);
 
 module.exports = authRouter;

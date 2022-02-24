@@ -1,15 +1,28 @@
 require('dotenv').config();
 const express = require('express');
 const volleyball = require('volleyball');
+const session = require('express-session');
+const passport = require('passport');
 const db = require('./models/_db');
-// eslint-disable-next-line no-unused-vars
-const models = require('./models/index');
+require('./models/index');
 const router = require('./routes');
+require('./routes/auth'); // Passport configuration
 
 const app = express();
 
 app.use(volleyball);
 app.use(express.json());
+
+app.use(
+  session({
+    secret: 'test',
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/api', router);
 

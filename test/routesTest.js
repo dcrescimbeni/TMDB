@@ -1,4 +1,4 @@
-const mocha = require('mocha');
+require('mocha');
 const chai = require('chai');
 const app = require('../api/server');
 const expect = chai.expect;

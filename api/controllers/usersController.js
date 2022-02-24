@@ -9,3 +9,11 @@ exports.usersCreateNew = (req, res, next) => {
     })
     .catch((err) => next(err));
 };
+
+exports.usersLogin = (req, res, next) => {
+  res.send('login page');
+};
+
+exports.usersOwnProfile = (req, res, next) => {
+  res.send(req.params);
+};

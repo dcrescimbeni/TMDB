@@ -5,3 +5,8 @@ exports.loginGet = (req, res, next) => {
 exports.secretGet = (req, res, next) => {
   res.status(205).send(`You've accessed the chamber of forbidden secrets`);
 };
+
+exports.logoutGet = (req, res, next) => {
+  req.logout();
+  res.redirect('/api/login');
+};

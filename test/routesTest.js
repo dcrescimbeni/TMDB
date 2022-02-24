@@ -107,7 +107,11 @@ describe('Users', () => {
     });
 
     describe('Route navigation', () => {
-      let session = null;
+      let session;
+
+      beforeEach(() => {
+        session = null;
+      });
 
       it('Shows authenticated message when navigating to profile', () => {
         return agent
@@ -125,9 +129,9 @@ describe('Users', () => {
               'text',
               'user profile: authenticated'
             );
-            console.log(response.text);
           });
       });
+
       it('Shows user NOT authenticated message when navigating to profile', () => {
         return agent
           .post('/api/login')
@@ -144,7 +148,34 @@ describe('Users', () => {
               'text',
               'user profile: NOT authenticated'
             );
-            console.log(response.text);
+          });
+      });
+
+      it('User can logout', () => {
+        return agent
+          .post('/api/login')
+          .send({
+            username: 'Dino',
+            password: 'test',
+          })
+          .then((res) => {
+            session = res.header['set-cookie'];
+          })
+          .then(() => agent.get('/api/users/user/dino').set('Cookie', session))
+          .then((response) => {
+            expect(response).to.have.property(
+              'text',
+              'user profile: authenticated'
+            );
+          })
+          .then((res) => {
+            return agent.get('/api/logout').set('Cookie', session);
+          })
+          .then((res) => {
+            expect(res).to.have.property(
+              'text',
+              'Found. Redirecting to /api/login'
+            );
           });
       });
     });

@@ -6,13 +6,14 @@ const passport = require('passport');
 const db = require('./models/_db');
 require('./models/index');
 const router = require('./routes');
-require('./routes/auth'); // Passport configuration
+require('./config/auth'); // Passport configuration
 
 const app = express();
 
 app.use(volleyball);
 app.use(express.json());
 
+// Passport configuration middleware
 app.use(
   session({
     secret: 'test',
@@ -20,7 +21,6 @@ app.use(
     saveUninitialized: true,
   })
 );
-
 app.use(passport.initialize());
 app.use(passport.session());
 

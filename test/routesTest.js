@@ -6,12 +6,10 @@ const supertest = require('supertest');
 
 describe('Media', () => {
   let agent;
-
   describe('Search media', () => {
     beforeEach(() => {
       agent = supertest(app);
     });
-
     it('Can search all media', () => {
       return agent
         .get('/api/media/search?query=king')
@@ -42,6 +40,27 @@ describe('Media', () => {
             'Luis Miguel: La Serie'
           );
         });
+    });
+  });
+});
+
+describe('Users', () => {
+  let agent;
+
+  beforeEach(() => {
+    agent = supertest(app);
+  });
+  describe('Create user', () => {
+    it('Can create a new user', () => {
+      return agent
+        .post('/api/users/new')
+        .send({
+          username: 'Dino',
+          password: 'test',
+          email: 'dino@example.com',
+        })
+        .expect(201)
+        .then((response) => {});
     });
   });
 });

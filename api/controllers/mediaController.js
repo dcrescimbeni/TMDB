@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-exports.moviesSearchGet = (req, res, next) => {
+exports.mediaSearchGet = (req, res, next) => {
   let { query, page } = req.query;
 
   if (!page) {
@@ -17,16 +17,17 @@ exports.moviesSearchGet = (req, res, next) => {
     });
 };
 
-exports.moviesGetOneMovie = (req, res, next) => {
+exports.mediaGetSingle = (req, res, next) => {
   let { id } = req.params;
+  let { type } = req.query;
 
   axios
     .get(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.TMDB_API}`
+      `https://api.themoviedb.org/3/${type}/${id}?api_key=${process.env.TMDB_API}`
     )
     .then((response) => response.data)
-    .then((movie) => {
-      res.send(movie);
+    .then((foundElement) => {
+      res.send(foundElement);
     })
     .catch((err) => {
       console.log(err);

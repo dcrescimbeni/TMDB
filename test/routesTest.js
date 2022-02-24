@@ -50,23 +50,103 @@ describe('Users', () => {
   beforeEach(() => {
     agent = supertest(app);
   });
-  describe('Create user', () => {
-    it('Can create a new user', () => {
-      return agent
-        .post('/api/users/new')
-        .send({
-          username: 'Dino',
-          password: 'test',
-          email: 'dino@example.com',
-        })
-        .expect(201)
-        .then((response) => response.body)
-        .then((createdUser) => {
-          expect(createdUser).to.have.property('username', 'Dino');
-          expect(createdUser).to.have.property('password');
-          expect(createdUser).to.have.property('email', 'dino@example.com');
-          expect(createdUser.password).to.not.equal('test');
-        });
+
+  describe('User operations', () => {
+    describe('Create user', () => {
+      it('Can create a new user', () => {
+        return agent
+          .post('/api/users/new')
+          .send({
+            username: 'Dino',
+            password: 'test',
+            email: 'dino@example.com',
+          })
+          .expect(201)
+          .then((response) => response.body)
+          .then((createdUser) => {
+            expect(createdUser).to.have.property('username', 'Dino');
+            expect(createdUser).to.have.property('password');
+            expect(createdUser).to.have.property('email', 'dino@example.com');
+            expect(createdUser.password).to.not.equal('test');
+          });
+      });
+    });
+  });
+
+  describe('Authentication', () => {
+    describe('Login', () => {
+      it('Can successfully login', () => {
+        return agent
+          .post('/api/login')
+          .send({
+            username: 'Dino',
+            password: 'test',
+          })
+          .then((response) => {
+            expect(response).to.have.property(
+              'text',
+              'Found. Redirecting to /api/secret'
+            );
+          });
+      });
+
+      it(`Can't login if entered wrong credentials`, () => {
+        return agent
+          .post('/api/login')
+          .send({
+            username: 'Dino',
+            password: 'wrongPassword',
+          })
+          .then((response) => {
+            expect(response).to.have.property(
+              'text',
+              'Found. Redirecting to /api/login'
+            );
+          });
+      });
+    });
+
+    describe('Route navigation', () => {
+      let session = null;
+
+      it('Shows authenticated message when navigating to profile', () => {
+        return agent
+          .post('/api/login')
+          .send({
+            username: 'Dino',
+            password: 'test',
+          })
+          .then((res) => {
+            session = res.header['set-cookie'];
+          })
+          .then(() => agent.get('/api/users/user/dino').set('Cookie', session))
+          .then((response) => {
+            expect(response).to.have.property(
+              'text',
+              'user profile: authenticated'
+            );
+            console.log(response.text);
+          });
+      });
+      it('Shows user NOT authenticated message when navigating to profile', () => {
+        return agent
+          .post('/api/login')
+          .send({
+            username: 'Dino',
+            password: 'wrongPassword',
+          })
+          .then((res) => {
+            session = res.header['set-cookie'];
+          })
+          .then(() => agent.get('/api/users/user/dino').set('Cookie', session))
+          .then((response) => {
+            expect(response).to.have.property(
+              'text',
+              'user profile: NOT authenticated'
+            );
+            console.log(response.text);
+          });
+      });
     });
   });
 });

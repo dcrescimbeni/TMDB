@@ -48,7 +48,7 @@ authRouter.get('/login', (req, res, next) => {
   res.send(`login page`);
 });
 authRouter.get('/secret', (req, res, next) => {
-  res.send(`You've accessed the chamber of forbidden secrets`);
+  res.status(205).send(`You've accessed the chamber of forbidden secrets`);
 });
 
 module.exports = authRouter;

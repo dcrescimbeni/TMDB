@@ -15,5 +15,9 @@ exports.usersLogin = (req, res, next) => {
 };
 
 exports.usersOwnProfile = (req, res, next) => {
-  res.send(req.params);
+  if (req.isAuthenticated()) {
+    res.send('user profile: authenticated');
+  } else {
+    res.send('user profile: NOT authenticated');
+  }
 };

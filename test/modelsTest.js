@@ -1,18 +1,12 @@
 const mocha = require('mocha');
 const chai = require('chai');
-const chaiAsPromised = require('chai-as-promised');
-chai.use(chaiAsPromised);
 const expect = chai.expect;
 const db = require('../api/models/_db');
-const { User } = require('../api/models/');
-const { Movie } = require('../api/models/');
+const { User } = require('../api/models');
+const { Movie } = require('../api/models');
 
 describe('User model', () => {
   beforeEach(() => {
-    return db.sync({ force: true });
-  });
-
-  afterEach(() => {
     return db.sync({ force: true });
   });
 

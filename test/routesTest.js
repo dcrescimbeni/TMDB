@@ -11,7 +11,13 @@ describe('Movies', () => {
       agent = supertest(app);
     });
     it('Can access /movies/search', () => {
-      return agent.get('/api/movies/search?query=king').expect(200);
+      return agent
+        .get('/api/movies/search?query=king')
+        .expect(200)
+        .then((res) => {
+          expect(res.body).to.be.an('array');
+          expect(res.body).to.not.have.lengthOf(0);
+        });
     });
   });
 });

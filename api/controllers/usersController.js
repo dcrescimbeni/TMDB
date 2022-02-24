@@ -5,7 +5,6 @@ exports.usersCreateNew = (req, res, next) => {
 
   User.create({ username, password, email })
     .then((createdUser) => {
-      console.log(createdUser);
       res.status(201).send(createdUser);
     })
     .catch((err) => next(err));

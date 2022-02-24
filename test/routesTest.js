@@ -60,7 +60,13 @@ describe('Users', () => {
           email: 'dino@example.com',
         })
         .expect(201)
-        .then((response) => {});
+        .then((response) => response.body)
+        .then((createdUser) => {
+          expect(createdUser).to.have.property('username', 'Dino');
+          expect(createdUser).to.have.property('password');
+          expect(createdUser).to.have.property('email', 'dino@example.com');
+          expect(createdUser.password).to.not.equal('test');
+        });
     });
   });
 });

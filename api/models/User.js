@@ -23,7 +23,7 @@ User.init(
 );
 
 User.beforeCreate((user) => {
-  bcrypt.hash(user.password, 5, (err, hash) => {
+  return bcrypt.hash(user.password, 10).then((hash) => {
     user.password = hash;
   });
 });

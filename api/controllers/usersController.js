@@ -21,3 +21,13 @@ exports.usersOwnProfile = (req, res, next) => {
     res.send('user profile: NOT authenticated');
   }
 };
+
+exports.usersFavList = (req, res, next) => {
+  res.send('users fav GET');
+};
+exports.usersFavPost = (req, res, next) => {
+  res.send('users fav POST');
+};
+exports.usersFavDelete = (req, res, next) => {
+  res.send('users fav DELETE');
+};

@@ -3,13 +3,22 @@ const chai = require('chai');
 const app = require('../api/server');
 const expect = chai.expect;
 const supertest = require('supertest');
+const { User } = require('../api/models');
 
 describe('Media', () => {
+  afterEach(() => {
+    User.findOne({ where: { username: 'testDino' } })
+      .then((res) => res.dataValues)
+      .then((user) => User.destroy({ where: { username: user.username } }));
+  });
+
   let agent;
+
   describe('Search media', () => {
     beforeEach(() => {
       agent = supertest(app);
     });
+
     it('Can search all media', () => {
       return agent
         .get('/api/media/search?query=king')
@@ -57,14 +66,14 @@ describe('Users', () => {
         return agent
           .post('/api/users/new')
           .send({
-            username: 'Dino',
+            username: 'testDino',
             password: 'test',
             email: 'dino@example.com',
           })
           .expect(201)
           .then((response) => response.body)
           .then((createdUser) => {
-            expect(createdUser).to.have.property('username', 'Dino');
+            expect(createdUser).to.have.property('username', 'testDino');
             expect(createdUser).to.have.property('password');
             expect(createdUser).to.have.property('email', 'dino@example.com');
             expect(createdUser.password).to.not.equal('test');
@@ -79,7 +88,7 @@ describe('Users', () => {
         return agent
           .post('/api/login')
           .send({
-            username: 'Dino',
+            username: 'testDino',
             password: 'test',
           })
           .then((response) => {
@@ -94,7 +103,7 @@ describe('Users', () => {
         return agent
           .post('/api/login')
           .send({
-            username: 'Dino',
+            username: 'testDino',
             password: 'wrongPassword',
           })
           .then((response) => {
@@ -117,13 +126,15 @@ describe('Users', () => {
         return agent
           .post('/api/login')
           .send({
-            username: 'Dino',
+            username: 'testDino',
             password: 'test',
           })
           .then((res) => {
             session = res.header['set-cookie'];
           })
-          .then(() => agent.get('/api/users/user/dino').set('Cookie', session))
+          .then(() =>
+            agent.get('/api/users/user/testDino').set('Cookie', session)
+          )
           .then((response) => {
             expect(response).to.have.property(
               'text',
@@ -136,13 +147,15 @@ describe('Users', () => {
         return agent
           .post('/api/login')
           .send({
-            username: 'Dino',
+            username: 'testDino',
             password: 'wrongPassword',
           })
           .then((res) => {
             session = res.header['set-cookie'];
           })
-          .then(() => agent.get('/api/users/user/dino').set('Cookie', session))
+          .then(() =>
+            agent.get('/api/users/user/testDino').set('Cookie', session)
+          )
           .then((response) => {
             expect(response).to.have.property(
               'text',
@@ -155,13 +168,15 @@ describe('Users', () => {
         return agent
           .post('/api/login')
           .send({
-            username: 'Dino',
+            username: 'testDino',
             password: 'test',
           })
           .then((res) => {
             session = res.header['set-cookie'];
           })
-          .then(() => agent.get('/api/users/user/dino').set('Cookie', session))
+          .then(() =>
+            agent.get('/api/users/user/testDino').set('Cookie', session)
+          )
           .then((response) => {
             expect(response).to.have.property(
               'text',

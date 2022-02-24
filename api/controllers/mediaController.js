@@ -30,6 +30,6 @@ exports.mediaGetSingle = (req, res, next) => {
       res.send(foundElement);
     })
     .catch((err) => {
-      console.log(err);
+      next(err);
     });
 };

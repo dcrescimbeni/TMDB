@@ -1,18 +1,22 @@
 require('mocha');
 const chai = require('chai');
 const expect = chai.expect;
-const db = require('../api/models/_db');
 const { User } = require('../api/models');
 
+// TODO: Not all deletes after the tests are working. There's still a user left
+
 describe('User model', () => {
-  beforeEach(() => {
-    return db.sync({ force: true });
+  afterEach(() => {
+    User.findAll({ where: { username: 'testDino' } })
+      .then((res) => res.dataValues)
+      .then((user) => User.destroy({ where: { username: user.username } }))
+      .then(() => {});
   });
 
   describe('Create new user', () => {
     it('Should create a user', () => {
       return User.create({
-        username: 'Dino',
+        username: 'testDino',
         password: 'test',
         email: 'dino@example.com',
       })

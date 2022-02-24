@@ -20,7 +20,7 @@
     "server": "nodemon api/server.js",
     "client": "react-scripts start",
     "build": "react-scripts build",
-    "test": "mocha"
+    "test": "mocha --watch"
   },
   "proxy": "http://localhost:3001",
   "eslintConfig": {

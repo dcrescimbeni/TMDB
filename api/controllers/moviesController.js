@@ -11,8 +11,24 @@ exports.moviesSearchGet = (req, res, next) => {
     .get(
       `https://api.themoviedb.org/3/search/multi?api_key=${process.env.TMDB_API}&query=${query}&page=${page}`
     )
-    .then((res) => res.data)
+    .then((response) => response.data)
     .then((searchResult) => {
       res.status(200).send(searchResult.results);
+    });
+};
+
+exports.moviesGetOneMovie = (req, res, next) => {
+  let { id } = req.params;
+
+  axios
+    .get(
+      `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.TMDB_API}`
+    )
+    .then((response) => response.data)
+    .then((movie) => {
+      res.send(movie);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };

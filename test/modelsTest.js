@@ -6,9 +6,9 @@ const { User } = require('../api/models');
 const { Movie } = require('../api/models');
 
 describe('User model', () => {
-  beforeEach(() => {
-    return db.sync({ force: true });
-  });
+  // beforeEach(() => {
+  //   return db.sync({ force: true });
+  // });
 
   it('Should create a user', () => {
     return User.create({
@@ -30,7 +30,7 @@ describe('User model', () => {
       password: 'test',
       email: 'dino@example.com',
     })
-      .then((response) => console.log(response))
+      .then(() => {})
       .catch((err) => {
         expect(err.errors[0].type).to.equal('notNull Violation');
       });
@@ -41,7 +41,7 @@ describe('User model', () => {
       username: 'Dino',
       email: 'dino@example.com',
     })
-      .then((response) => console.log(response))
+      .then(() => {})
       .catch((err) => {
         expect(err.errors[0].type).to.equal('notNull Violation');
       });
@@ -52,7 +52,7 @@ describe('User model', () => {
       user: 'dino',
       password: 'test',
     })
-      .then((response) => console.log(response))
+      .then(() => {})
       .catch((err) => {
         expect(err.errors[0].type).to.equal('notNull Violation');
       });

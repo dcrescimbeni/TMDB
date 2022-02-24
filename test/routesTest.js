@@ -6,17 +6,30 @@ const supertest = require('supertest');
 
 describe('Movies', () => {
   let agent;
+
   describe('Search movies', () => {
     beforeEach(() => {
       agent = supertest(app);
     });
+
     it('Can access /movies/search', () => {
       return agent
         .get('/api/movies/search?query=king')
         .expect(200)
-        .then((res) => {
-          expect(res.body).to.be.an('array');
-          expect(res.body).to.not.have.lengthOf(0);
+        .then((response) => {
+          expect(response.body).to.be.an('array');
+          expect(response.body).to.not.have.lengthOf(0);
+        });
+    });
+
+    it('Can get a specific movie', () => {
+      return agent
+        .get('/api/movies/movie/120')
+        .expect(200)
+        .then((response) => {
+          expect(response.body.original_title).to.equals(
+            'The Lord of the Rings: The Fellowship of the Ring'
+          );
         });
     });
   });

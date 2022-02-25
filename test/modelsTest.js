@@ -172,7 +172,7 @@ describe('Favorite model', () => {
 
   before('Creates a user', () => {
     const testUserDetails = {
-      username: 'favoritestestuser',
+      username: 'randomUser098032',
       password: 'test',
       email: 'test@test.com',
     };

@@ -4,7 +4,8 @@ const usersController = require('../controllers/usersController');
 const isOwnUser = require('../controllers/authController').isOwnUser;
 
 usersRouter.post('/new', usersController.usersCreateNew);
-usersRouter.get('/user/:username', usersController.usersOwnProfile);
+usersRouter.get('/user/:username', usersController.usersProfile);
+usersRouter.get('/search', usersController.usersSearch);
 
 // Favorites routes
 

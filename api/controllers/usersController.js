@@ -1,4 +1,5 @@
 const { User, Favorite } = require('../models');
+const { Op } = require('sequelize');
 const axios = require('axios');
 
 exports.usersCreateNew = (req, res, next) => {
@@ -11,20 +12,44 @@ exports.usersCreateNew = (req, res, next) => {
     .catch((err) => next(err));
 };
 
+exports.usersSearch = (req, res, next) => {
+  const userSearch = req.query.query;
+  console.log(userSearch);
+  User.findAll({ where: { username: { [Op.like]: `%${userSearch}%` } } }).then(
+    (result) => {
+      res.send(result);
+    }
+  );
+};
+
 exports.usersLogin = (req, res, next) => {
   res.send('login page');
 };
 
-exports.usersOwnProfile = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    res.send('user profile: authenticated');
-  } else {
-    res.send('user profile: NOT authenticated');
-  }
+exports.usersProfile = (req, res, next) => {
+  let username = req.params.username.toLowerCase();
+  req.isAuthenticated();
+
+  User.findOne({ where: { username }, include: Favorite })
+    .then((user) => user.dataValues)
+    .then((userDetails) => {
+      let isOwner = false;
+
+      if (req.user && req.user.dataValues.username === userDetails.username) {
+        isOwner = true;
+      }
+
+      let userInfo = {
+        username: userDetails.username,
+        isOwner,
+      };
+
+      res.send(userInfo);
+    });
 };
 
 exports.usersFavList = (req, res, next) => {
-  const { username } = req.params;
+  let username = req.params.username.toLowerCase();
 
   User.findOne({ where: { username }, include: Favorite })
     .then((response) => response.dataValues.favorites)

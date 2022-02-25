@@ -82,6 +82,108 @@ describe('Users', () => {
           });
       });
     });
+
+    describe('Search user', () => {
+      before(() => {
+        const users = [
+          {
+            username: 'fuzzysearch',
+            password: 'test',
+            email: 'fuzzy@asd.com',
+            originalUsername: 'fuzzySearch',
+          },
+          {
+            username: 'almostfuzzysearch',
+            password: 'test',
+            email: 'fuzzy@asd.com',
+            originalUsername: 'almostFuzzySearch',
+          },
+          {
+            username: 'notrelated',
+            password: 'test',
+            email: 'fuzzy@asd.com',
+            originalUsername: 'notRelated',
+          },
+          {
+            username: 'gettingfuzzy',
+            password: 'test',
+            email: 'fuzzy@asd.com',
+            originalUsername: 'gettingFuzzy',
+          },
+        ];
+
+        return User.bulkCreate(users);
+      });
+
+      after(() => {
+        return User.destroy({
+          where: {
+            username: [
+              'fuzzysearch',
+              'almostfuzzysearch',
+              'notrelated',
+              'gettingfuzzy',
+            ],
+          },
+        });
+      });
+
+      it('A get route exist', () => {
+        return agent
+          .get('/api/users/search?query=fuzzy')
+          .expect(200)
+          .then((res) => {
+            expect(res.body).to.have.lengthOf(3);
+          });
+      });
+
+      it('Can search users ussing fuzzy matching', () => {});
+    });
+  });
+
+  describe('User profile', () => {
+    let session;
+
+    before(() => {
+      return User.create({
+        username: 'someguy',
+        password: 'test',
+        email: 'test@test.com',
+      });
+    });
+
+    after(() => {
+      return User.destroy({ where: { username: 'someguy' } });
+    });
+
+    it('Can access another user profile', () => {
+      return agent
+        .get('/api/users/user/someGuy')
+        .expect(200)
+        .then((response) => response.body)
+        .then((userDetails) => {
+          expect(userDetails).to.have.property('username');
+          expect(userDetails).to.have.property('isOwner', false);
+        });
+    });
+
+    it('Can access own profile', () => {
+      return agent
+        .post('/api/login')
+        .send({
+          username: 'someguy',
+          password: 'test',
+        })
+        .then((res) => {
+          session = res.header['set-cookie'];
+        })
+        .then(() => agent.get('/api/users/user/someguy').set('Cookie', session))
+        .then((response) => response.body)
+        .then((userDetails) => {
+          expect(userDetails).to.have.property('username');
+          expect(userDetails).to.have.property('isOwner', true);
+        });
+    });
   });
 
   describe('Authentication', () => {
@@ -124,48 +226,6 @@ describe('Users', () => {
         session = null;
       });
 
-      it('Shows authenticated message when navigating to profile', () => {
-        return agent
-          .post('/api/login')
-          .send({
-            username: 'testDino',
-            password: 'test',
-          })
-          .then((res) => {
-            session = res.header['set-cookie'];
-          })
-          .then(() =>
-            agent.get('/api/users/user/testDino').set('Cookie', session)
-          )
-          .then((response) => {
-            expect(response).to.have.property(
-              'text',
-              'user profile: authenticated'
-            );
-          });
-      });
-
-      it('Shows user NOT authenticated message when navigating to profile', () => {
-        return agent
-          .post('/api/login')
-          .send({
-            username: 'testDino',
-            password: 'wrongPassword',
-          })
-          .then((res) => {
-            session = res.header['set-cookie'];
-          })
-          .then(() =>
-            agent.get('/api/users/user/testDino').set('Cookie', session)
-          )
-          .then((response) => {
-            expect(response).to.have.property(
-              'text',
-              'user profile: NOT authenticated'
-            );
-          });
-      });
-
       it('User can logout', () => {
         return agent
           .post('/api/login')
@@ -179,11 +239,9 @@ describe('Users', () => {
           .then(() =>
             agent.get('/api/users/user/testDino').set('Cookie', session)
           )
-          .then((response) => {
-            expect(response).to.have.property(
-              'text',
-              'user profile: authenticated'
-            );
+          .then((response) => response.body)
+          .then((userData) => {
+            expect(userData).to.have.property('isOwner', true);
           })
           .then((res) => {
             return agent.get('/api/logout').set('Cookie', session);

@@ -9,6 +9,10 @@ User.init(
     username: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
+      validate: {
+        is: /^[A-Za-z0-9_]+$/g,
+      },
     },
     password: {
       type: DataTypes.STRING,
@@ -26,6 +30,10 @@ User.beforeCreate((user) => {
   return bcrypt.hash(user.password, 10).then((hash) => {
     user.password = hash;
   });
+});
+
+User.beforeCreate((user) => {
+  user.username = user.username.toLowerCase();
 });
 
 module.exports = User;

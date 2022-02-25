@@ -4,6 +4,7 @@ const passport = require('passport');
 const { User } = require('../models');
 
 const verifyCallback = (username, password, done) => {
+  username = username.toLowerCase();
   User.findOne({ where: { username } })
     .then((res) => res.dataValues)
     .then((user) => {

@@ -56,7 +56,7 @@ describe('Users', () => {
   });
 
   after(() => {
-    User.findOne({ where: { username: 'testDino' } })
+    User.findOne({ where: { username: 'testdino' } })
       .then((res) => res.dataValues)
       .then((user) => User.destroy({ where: { username: user.username } }));
   });
@@ -74,7 +74,7 @@ describe('Users', () => {
           .expect(201)
           .then((response) => response.body)
           .then((createdUser) => {
-            expect(createdUser).to.have.property('username', 'testDino');
+            expect(createdUser).to.have.property('username', 'testdino');
             expect(createdUser).to.have.property('password');
             expect(createdUser).to.have.property('email', 'dino@example.com');
             expect(createdUser.password).to.not.equal('test');

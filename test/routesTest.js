@@ -1,10 +1,12 @@
 require('mocha');
 const after = require('mocha').after;
+const before = require('mocha').before;
 const chai = require('chai');
 const app = require('../api/server');
 const expect = chai.expect;
 const supertest = require('supertest');
 const { User } = require('../api/models');
+const { agent } = require('supertest');
 
 describe('Media', () => {
   let agent;
@@ -194,6 +196,103 @@ describe('Users', () => {
             );
           });
       });
+    });
+  });
+});
+
+describe('Favorites', () => {
+  let session;
+  let agent = supertest(app);
+
+  before('Create a new user and authenticate it', () => {
+    return agent
+      .post('/api/users/new')
+      .send({
+        username: 'favoritetesting',
+        password: 'test',
+        email: 'dino@example.com',
+      })
+      .then(() => {
+        return agent
+          .post('/api/login')
+          .send({ username: 'favoritetesting', password: 'test' });
+      })
+      .then((res) => (session = res.header['set-cookie']))
+      .catch();
+  });
+
+  after('Delete user', () => {
+    return User.findOne({
+      where: { email: 'dino@example.com' },
+    })
+      .then((res) => res.dataValues)
+      .then((user) => User.destroy({ where: { username: user.username } }))
+      .catch(() => {});
+  });
+
+  describe('Getting favorites', () => {
+    beforeEach('Create a new favorite', () => {
+      return agent
+        .post('/api/users/user/favoritetesting/fav')
+        .set('Cookie', session)
+        .send({
+          mediaId: 120,
+          type: 'movie',
+        });
+    });
+
+    it('Should get a favorite', () => {
+      return agent.get('/api/users/user/favoritetesting/fav').then((res) => {
+        expect(res.body).to.have.lengthOf(1);
+      });
+    });
+  });
+
+  describe('Adding favorites', () => {
+    after(() => {
+      return agent
+        .delete('/api/users/user/favoritetesting/fav')
+        .set('Cookie', session)
+        .send({
+          mediaId: 130,
+          type: 'movie',
+        });
+    });
+
+    it('should add a new favorite', () => {
+      return agent
+        .post('/api/users/user/favoritetesting/fav')
+        .set('Cookie', session)
+        .send({
+          mediaId: 130,
+          type: 'movie',
+        })
+        .expect(201)
+        .then((res) => {
+          expect(res.body).to.have.property('id');
+          expect(res.body).to.have.property('userId');
+          expect(res.body).to.have.property('mediaId', 130);
+          expect(res.body).to.have.property('type', 'movie');
+        });
+    });
+  });
+
+  describe('Deleting favorites', () => {
+    it('Should delete a favorite', () => {
+      return agent
+        .delete('/api/users/user/favoritetesting/fav')
+        .set('Cookie', session)
+        .send({
+          mediaId: 120,
+          type: 'movie',
+        })
+        .expect(200)
+        .then(() => {
+          return agent.get('/api/users/user/favoritetesting/fav');
+        })
+        .then((res) => {
+          expect(res.body).to.have.lengthOf(0);
+        });
     });
   });
 });

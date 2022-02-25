@@ -32,10 +32,10 @@ exports.usersFavList = (req, res, next) => {
 };
 
 exports.usersFavPost = (req, res, next) => {
-  const { movieId } = req.body;
+  const { mediaId, type } = req.body;
   const userId = req.user.dataValues.id;
 
-  Favorite.create({ userId, movieId })
+  Favorite.create({ userId, mediaId, type })
     .then((addedFavorite) => {
       res.status(201).send(addedFavorite);
     })
@@ -43,9 +43,9 @@ exports.usersFavPost = (req, res, next) => {
 };
 
 exports.usersFavDelete = (req, res, next) => {
-  const { movieId } = req.body;
+  const { mediaId, type } = req.body;
   const userId = req.user.dataValues.id;
-  Favorite.destroy({ where: { movieId, userId } })
+  Favorite.destroy({ where: { mediaId, userId, type } })
     .then((deletedMovie) => {
       console.log(deletedMovie);
       res.send('Movie deleted');

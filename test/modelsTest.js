@@ -67,6 +67,22 @@ describe('User model', () => {
           expect(err.errors[0].type).to.equal('unique violation');
         });
     });
+
+    it('User must retain its original username', () => {
+      return User.create({
+        username: 'testOriginalUsername',
+        password,
+        email,
+      })
+        .then((createdUser) => createdUser.dataValues)
+        .then((user) => {
+          expect(user).to.have.property('id');
+          expect(user).to.have.property('username');
+          expect(user.username).to.equal('testoriginalusername');
+          expect(user).to.have.property('originalUsername');
+          expect(user.originalUsername).to.equal('testOriginalUsername');
+        });
+    });
   });
 
   describe('User creation validations', () => {

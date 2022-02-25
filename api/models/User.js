@@ -22,9 +22,17 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    originalUsername: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
   { sequelize: db, modelName: 'users' }
 );
+
+User.beforeValidate((user) => {
+  user.originalUsername = user.username;
+});
 
 User.beforeCreate((user) => {
   return bcrypt.hash(user.password, 10).then((hash) => {

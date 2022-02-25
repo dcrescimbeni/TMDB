@@ -20,9 +20,10 @@ exports.isAuth = (req, res, next) => {
 };
 
 exports.isOwnUser = (req, res, next) => {
-  console.log('Params: ', req.params);
-  console.log('user: ', req.user);
-  if (req.isAuthenticated()) {
+  const paramsUser = req.params.username;
+  const loggedUser = req.user ? req.user.dataValues.username : null;
+
+  if (req.isAuthenticated() && paramsUser === loggedUser) {
     next();
   } else {
     res.redirect('/api/login');

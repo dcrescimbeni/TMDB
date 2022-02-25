@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Favorite } = require('../models');
 
 exports.usersCreateNew = (req, res, next) => {
   const { username, password, email } = req.body;
@@ -23,11 +23,32 @@ exports.usersOwnProfile = (req, res, next) => {
 };
 
 exports.usersFavList = (req, res, next) => {
-  res.send('users fav GET');
+  const { username } = req.params;
+
+  User.findOne({ where: { username }, include: Favorite })
+    .then((response) => response.dataValues.favorites)
+    .then((favorites) => res.send(favorites))
+    .catch((err) => next(err));
 };
+
 exports.usersFavPost = (req, res, next) => {
-  res.send('users fav POST');
+  const { movieId } = req.body;
+  const userId = req.user.dataValues.id;
+
+  Favorite.create({ userId, movieId })
+    .then((addedFavorite) => {
+      res.status(201).send(addedFavorite);
+    })
+    .catch((err) => next(err));
 };
+
 exports.usersFavDelete = (req, res, next) => {
-  res.send('users fav DELETE');
+  const { movieId } = req.body;
+  const userId = req.user.dataValues.id;
+  Favorite.destroy({ where: { movieId, userId } })
+    .then((deletedMovie) => {
+      console.log(deletedMovie);
+      res.send('Movie deleted');
+    })
+    .catch((err) => next(err));
 };

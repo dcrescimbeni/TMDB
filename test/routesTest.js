@@ -1,4 +1,5 @@
 require('mocha');
+const after = require('mocha').after;
 const chai = require('chai');
 const app = require('../api/server');
 const expect = chai.expect;
@@ -6,12 +7,6 @@ const supertest = require('supertest');
 const { User } = require('../api/models');
 
 describe('Media', () => {
-  afterEach(() => {
-    User.findOne({ where: { username: 'testDino' } })
-      .then((res) => res.dataValues)
-      .then((user) => User.destroy({ where: { username: user.username } }));
-  });
-
   let agent;
 
   describe('Search media', () => {
@@ -58,6 +53,12 @@ describe('Users', () => {
 
   beforeEach(() => {
     agent = supertest(app);
+  });
+
+  after(() => {
+    User.findOne({ where: { username: 'testDino' } })
+      .then((res) => res.dataValues)
+      .then((user) => User.destroy({ where: { username: user.username } }));
   });
 
   describe('User operations', () => {

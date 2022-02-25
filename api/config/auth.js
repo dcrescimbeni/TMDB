@@ -7,7 +7,6 @@ const verifyCallback = (username, password, done) => {
   User.findOne({ where: { username } })
     .then((res) => res.dataValues)
     .then((user) => {
-      console.log(user);
       if (!user) done(null, false);
       bcrypt.compare(password, user.password).then((isValid) => {
         if (isValid) done(null, user);

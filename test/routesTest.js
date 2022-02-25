@@ -6,7 +6,6 @@ const app = require('../api/server');
 const expect = chai.expect;
 const supertest = require('supertest');
 const { User } = require('../api/models');
-const { agent } = require('supertest');
 
 describe('Media', () => {
   let agent;

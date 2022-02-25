@@ -1,4 +1,5 @@
 const { User, Favorite } = require('../models');
+const axios = require('axios');
 
 exports.usersCreateNew = (req, res, next) => {
   const { username, password, email } = req.body;
@@ -27,7 +28,26 @@ exports.usersFavList = (req, res, next) => {
 
   User.findOne({ where: { username }, include: Favorite })
     .then((response) => response.dataValues.favorites)
-    .then((favorites) => res.send(favorites))
+    .then((favorites) => {
+      let populatedFavorites = favorites.map((item) => {
+        console.log('item: ', item);
+        let url = `https://api.themoviedb.org/3/${item.type}/${item.mediaId}?api_key=${process.env.TMDB_API}`;
+        return axios
+          .get(url)
+          .then((res) => res.data)
+          .then((data) => {
+            item.dataValues.tmdbDetails = data;
+            return item;
+          });
+      });
+      return populatedFavorites;
+    })
+    .then((favorites) => {
+      return Promise.all(favorites);
+    })
+    .then((allPopulatedFavorites) => {
+      res.json(allPopulatedFavorites);
+    })
     .catch((err) => next(err));
 };
 
@@ -47,7 +67,6 @@ exports.usersFavDelete = (req, res, next) => {
   const userId = req.user.dataValues.id;
   Favorite.destroy({ where: { mediaId, userId, type } })
     .then((deletedMovie) => {
-      console.log(deletedMovie);
       res.send('Movie deleted');
     })
     .catch((err) => next(err));

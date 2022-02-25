@@ -30,7 +30,6 @@ exports.usersFavList = (req, res, next) => {
     .then((response) => response.dataValues.favorites)
     .then((favorites) => {
       let populatedFavorites = favorites.map((item) => {
-        console.log('item: ', item);
         let url = `https://api.themoviedb.org/3/${item.type}/${item.mediaId}?api_key=${process.env.TMDB_API}`;
         return axios
           .get(url)

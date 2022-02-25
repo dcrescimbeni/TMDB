@@ -243,6 +243,11 @@ describe('Favorites', () => {
     it('Should get a favorite', () => {
       return agent.get('/api/users/user/favoritetesting/fav').then((res) => {
         expect(res.body).to.have.lengthOf(1);
+        expect(res.body[0]).to.have.property('id');
+        expect(res.body[0].tmdbDetails).to.have.property(
+          'original_title',
+          'The Lord of the Rings: The Fellowship of the Ring'
+        );
       });
     });
   });
@@ -253,7 +258,7 @@ describe('Favorites', () => {
         .delete('/api/users/user/favoritetesting/fav')
         .set('Cookie', session)
         .send({
-          mediaId: 130,
+          mediaId: 424694,
           type: 'movie',
         });
     });
@@ -263,14 +268,14 @@ describe('Favorites', () => {
         .post('/api/users/user/favoritetesting/fav')
         .set('Cookie', session)
         .send({
-          mediaId: 130,
+          mediaId: 424694,
           type: 'movie',
         })
         .expect(201)
         .then((res) => {
           expect(res.body).to.have.property('id');
           expect(res.body).to.have.property('userId');
-          expect(res.body).to.have.property('mediaId', 130);
+          expect(res.body).to.have.property('mediaId', 424694);
           expect(res.body).to.have.property('type', 'movie');
         });
     });

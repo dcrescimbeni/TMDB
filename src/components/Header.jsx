@@ -1,9 +1,12 @@
 import styled from 'styled-components/macro';
+import { Link } from 'react-router-dom';
 
 const Header = ({ user }) => {
   return (
     <HeaderWrapper>
-      <div>MUUBI</div>
+      <div>
+        <Link to="/">MUUBI</Link>
+      </div>
       <div>Sign up / Log in</div>
     </HeaderWrapper>
   );

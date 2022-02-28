@@ -1,38 +1,32 @@
 import React, { useState } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+
 import styled from 'styled-components/macro';
 import GlobalStyles from './GlobalStyles';
 import Header from './components/Header';
 import SearchBar from './commons/SearchBar';
 import Content from './components/Content';
-import axios from 'axios';
 
 const App = () => {
   const [user, setUser] = useState('dinocrescimbeni');
-  const [searchResults, setSearchResults] = useState([]);
+  let navigate = useNavigate();
 
   const handleSubmit = (event, query) => {
     event.preventDefault();
-    axios
-      .get(`/api/media/search?query=${query}`)
-      .then((res) => res.data)
-      .then((movies) => {
-        console.log(movies);
-        setSearchResults(movies);
-      });
+    navigate(`/media/search?query=${query}`);
   };
 
   return (
     <>
+      <GlobalStyles />
       <Header user={user} />
       <h1>
         Find <WordAccent>any</WordAccent> movie or TV show
       </h1>
-      <SearchBar
-        setSearchResults={setSearchResults}
-        handleSubmit={handleSubmit}
-      />
-      <Content searchResults={searchResults} />
-      <GlobalStyles />
+      <SearchBar handleSubmit={handleSubmit} />
+      <Routes>
+        <Route path="/media/search" element={<Content />} />
+      </Routes>
     </>
   );
 };
@@ -42,5 +36,3 @@ const WordAccent = styled.span`
 `;
 
 export default App;
-
-//TODO: Fix bug - multisearch: get only tv and movies;ASDFASEDFG ASDF AS

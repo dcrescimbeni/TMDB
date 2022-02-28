@@ -1,20 +1,15 @@
 import useInput from '../hooks/useInput';
-import axios from 'axios';
 
-const SearchBar = () => {
+const SearchBar = ({ handleSubmit }) => {
   const searchQuery = useInput('lets test this');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios
-      .get(`/api/media/search?query=${searchQuery.value}`)
-      .then((res) => res.data)
-      .then((movies) => console.log(movies));
-  };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={(event) => {
+          handleSubmit(event, searchQuery.value);
+        }}
+      >
         <input type="text" name="search" {...searchQuery} />
       </form>
     </div>

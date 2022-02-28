@@ -32,6 +32,7 @@ html, body {
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  color:#4E4E4E;
 }
 /*
   6. Improve media defaults
@@ -58,5 +59,16 @@ p, h1, h2, h3, h4, h5, h6 {
 #root, #__next {
   isolation: isolate;
 }
+
+// Global styles
+h1 {font-size: 3.052rem;}
+
+h2 {font-size: 2.441rem;}
+
+h3 {font-size: 1.953rem;}
+
+h4 {font-size: 1.563rem;}
+
+h5 {font-size: 1.25rem;}
 `;
 export default GlobalStyles;

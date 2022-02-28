@@ -3,11 +3,6 @@ import styled from 'styled-components/macro';
 import noPosterAvailable from '../assets/noPosterAvailable.jpg';
 
 const MediaCard = ({ mediaDetails }) => {
-  let title =
-    mediaDetails.media_type === 'movie'
-      ? mediaDetails.original_title
-      : mediaDetails.name;
-
   let scoreAverage =
     mediaDetails.vote_average > 0
       ? Math.round(mediaDetails.vote_average)
@@ -18,15 +13,22 @@ const MediaCard = ({ mediaDetails }) => {
       {mediaDetails.poster_path ? (
         <Card
           src={`http://image.tmdb.org/t/p/w342${mediaDetails.poster_path}`}
-          alt={`${title} poster`}
+          alt={`${mediaDetails.original_title || mediaDetails.name} poster`}
         />
       ) : (
-        <Card src={noPosterAvailable} alt={`${title} poster not available`} />
+        <Card
+          src={noPosterAvailable}
+          alt={`${
+            mediaDetails.original_title || mediaDetails.name
+          } poster not available`}
+        />
       )}
 
       <ShadowOverlayWrapper>
         <MovieTitleWrapper>
-          <MovieTitle>{title}</MovieTitle>
+          <MovieTitle>
+            {mediaDetails.original_title || mediaDetails.name}
+          </MovieTitle>
           {scoreAverage ? (
             <ScoreWrapper>
               <Score>{scoreAverage}</Score>

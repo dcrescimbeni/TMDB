@@ -48,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "babel-plugin-styled-components": "^2.0.6",
     "chai": "^4.3.6",
     "chai-as-promised": "^7.1.1",
     "concurrently": "^6.4.0",

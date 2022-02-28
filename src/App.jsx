@@ -6,6 +6,7 @@ import GlobalStyles from './GlobalStyles';
 import Header from './components/Header';
 import SearchBar from './commons/SearchBar';
 import Content from './components/Content';
+import MediaDetails from './components/MediaDetails';
 
 const App = () => {
   const [user, setUser] = useState('dinocrescimbeni');
@@ -26,6 +27,7 @@ const App = () => {
       <SearchBar handleSubmit={handleSubmit} />
       <Routes>
         <Route path="/media/search" element={<Content />} />
+        <Route path="/media/single/:id" element={<MediaDetails />} />
       </Routes>
     </>
   );

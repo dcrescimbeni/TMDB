@@ -1,11 +1,17 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
+
 import MediaCard from '../commons/MediaCard';
 
 const MediaGrid = ({ searchResults }) => {
   return (
     <GridWrapper>
       {searchResults.map((item, index) => {
-        return <MediaCard mediaDetails={item} key={index} />;
+        return (
+          <Link to={`/media/single/${item.id}?type=${item.media_type}`}>
+            <MediaCard mediaDetails={item} key={index} />;
+          </Link>
+        );
       })}
     </GridWrapper>
   );

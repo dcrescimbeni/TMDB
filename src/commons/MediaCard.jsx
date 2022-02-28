@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+
 import noPosterAvailable from '../assets/noPosterAvailable.jpg';
 
 const MediaCard = ({ mediaDetails }) => {

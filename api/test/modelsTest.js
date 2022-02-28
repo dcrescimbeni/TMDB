@@ -3,8 +3,8 @@ const after = require('mocha').after;
 const before = require('mocha').before;
 const chai = require('chai');
 const expect = chai.expect;
-const { User, Favorite } = require('../api/models');
-const db = require('../api/models/_db');
+const { User, Favorite } = require('../models');
+const db = require('../models/_db');
 
 before(() => {
   db.sync({ force: false });

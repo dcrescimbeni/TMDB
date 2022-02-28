@@ -2,10 +2,10 @@ require('mocha');
 const after = require('mocha').after;
 const before = require('mocha').before;
 const chai = require('chai');
-const app = require('../api/server');
+const app = require('../server');
 const expect = chai.expect;
 const supertest = require('supertest');
-const { User } = require('../api/models');
+const { User } = require('../models');
 
 describe('Media', () => {
   let agent;

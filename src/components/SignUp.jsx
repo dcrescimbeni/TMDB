@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import axios from 'axios';
 
@@ -12,6 +12,7 @@ const SignUp = () => {
   const passwordAgain = useInput('');
   const email = useInput('');
   const emailAgain = useInput('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [validationErrors, setValidationErrors] = useState({
     username: [],
@@ -54,13 +55,16 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     setValidationErrors(validate());
+    setIsSubmitted(true);
+  };
 
+  useEffect(() => {
     if (
       validationErrors.username.length === 0 &&
       validationErrors.password.length === 0 &&
-      validationErrors.email.length === 0
+      validationErrors.email.length === 0 &&
+      isSubmitted
     ) {
       axios
         .post('/api/users/new', {
@@ -69,11 +73,17 @@ const SignUp = () => {
           email: email.value,
         })
         .then((res) => res.data)
-        .then((newUser) => {
-          console.log(newUser);
+        .then((newUser) => console.log(newUser))
+        .catch((err) => {
+          setValidationErrors({
+            username: [`Username already exists`],
+            password: [],
+            email: [],
+          });
         });
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [validationErrors, isSubmitted]);
 
   return (
     <MainWrapper>

@@ -9,7 +9,7 @@ exports.usersCreateNew = (req, res, next) => {
     .then((createdUser) => {
       res.status(201).send(createdUser);
     })
-    .catch((err) => next(err));
+    .catch((err) => res.sendStatus(409));
 };
 
 exports.usersCheckIfUserExists = (req, res, next) => {

@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import axios from 'axios';
 
@@ -12,19 +13,58 @@ const SignUp = () => {
   const email = useInput('');
   const emailAgain = useInput('');
 
+  const [validationErrors, setValidationErrors] = useState({
+    username: [],
+    password: [],
+    email: [],
+  });
+
+  // Validations
+  const validate = () => {
+    const errors = {
+      username: [],
+      password: [],
+      email: [],
+    };
+
+    // Username validations
+    if (username.value.length < 3)
+      errors.username.push(`Username must be at least 3 characters long`);
+    if (username.value.length > 23)
+      errors.username.push(`Username can't be longer than 23 characters`);
+
+    // Password validations
+    if (password.value.length < 8)
+      errors.password.push(`Password must be at least 8 characters long`);
+    if (password.value !== passwordAgain.value)
+      errors.password.push(`Passwords are not the same`);
+
+    return errors;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios
-      .post('/api/users/new', {
-        username: username.value,
-        password: password.value,
-        email: email.value,
-      })
-      .then((res) => res.data)
-      .then((newUser) => {
-        console.log(newUser);
-      });
+    const errors = validate();
+    console.log(errors);
+
+    setValidationErrors(validate());
+
+    if (validationErrors.username.length > 0) {
+      console.log(validationErrors);
+    }
+    // } else {
+    // axios
+    //   .post('/api/users/new', {
+    //     username: username.value,
+    //     password: password.value,
+    //     email: email.value,
+    //   })
+    //   .then((res) => res.data)
+    //   .then((newUser) => {
+    //     console.log(newUser);
+    //   });
+    // }
   };
 
   return (
@@ -38,6 +78,7 @@ const SignUp = () => {
           <label htmlFor="password">Password</label>
           <input type="text" placeholder="Password" {...password} />
           <input type="text" placeholder="Enter again" {...passwordAgain} />
+          {`is password valid: ${'asd'}`}
           <br />
           <label htmlFor="email">Email</label>
           <input type="text" placeholder="Email" {...email} />

@@ -46,11 +46,10 @@ const Login = () => {
         })
         .then((res) => {
           console.log(res);
-
           return res.data;
         })
         .then((isAuthenticated) => {
-          if (isAuthenticated) {
+          if (isAuthenticated === 'login successful') {
             console.log('success, redirecting');
           } else {
             const errors = initialStateErrors;

@@ -6,9 +6,12 @@ const { User } = require('../models');
 const verifyCallback = (username, password, done) => {
   username = username.toLowerCase();
   User.findOne({ where: { username } })
-    .then((res) => res.dataValues)
-    .then((user) => {
-      if (!user) done(null, false);
+    .then((res) => {
+      if (!res) {
+        done(null, false);
+        return;
+      }
+      let user = res.dataValues;
       bcrypt.compare(password, user.password).then((isValid) => {
         if (isValid) done(null, user);
         else done(null, false);

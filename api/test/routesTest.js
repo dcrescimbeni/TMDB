@@ -208,7 +208,7 @@ describe('Users', () => {
 describe('Authentication', () => {
   let agent;
 
-  before(() => {
+  before('Creates a new user to use as login', () => {
     agent = supertest(app);
 
     return agent.post('/api/users/new').send({
@@ -218,7 +218,7 @@ describe('Authentication', () => {
     });
   });
 
-  after(() => {
+  after('Deletes the created user', () => {
     return User.destroy({ where: { username: 'testlogin' } });
   });
 
@@ -246,6 +246,21 @@ describe('Authentication', () => {
         .send({
           username: 'testlogin',
           password: 'wrongPassword',
+        })
+        .then((response) => {
+          expect(response).to.have.property(
+            'text',
+            'Found. Redirecting to /api/login'
+          );
+        });
+    });
+
+    it(`Can't login if user does not exists`, () => {
+      return agent
+        .post('/api/login')
+        .send({
+          username: 'jkljasdflkjalsdf',
+          password: 'test',
         })
         .then((response) => {
           expect(response).to.have.property(

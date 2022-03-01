@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import useInput from '../hooks/useInput';
 import MainButton from '../commons/MainButton';
@@ -10,6 +11,7 @@ import InputField from '../commons/InputField';
 const Login = () => {
   const username = useInput('');
   const password = useInput('');
+  const navigate = useNavigate();
 
   const initialStateErrors = {
     username: [],
@@ -50,7 +52,7 @@ const Login = () => {
         })
         .then((isAuthenticated) => {
           if (isAuthenticated === 'login successful') {
-            console.log('success, redirecting');
+            navigate('/');
           } else {
             const errors = initialStateErrors;
             errors.general.push(`Wrong username or password`);

@@ -7,6 +7,7 @@ import Header from './components/Header';
 import SearchBar from './commons/SearchBar';
 import Content from './components/Content';
 import MediaDetails from './components/MediaDetails';
+import SignUp from './components/SignUp';
 
 const App = () => {
   const [user, setUser] = useState('dinocrescimbeni');
@@ -28,6 +29,7 @@ const App = () => {
       <Routes>
         <Route path="/media/search" element={<Content />} />
         <Route path="/media/single/:id" element={<MediaDetails />} />
+        <Route path="/users/new" element={<SignUp />} />
       </Routes>
     </>
   );

@@ -32,12 +32,22 @@ const SignUp = () => {
       errors.username.push(`Username must be at least 3 characters long`);
     if (username.value.length > 23)
       errors.username.push(`Username can't be longer than 23 characters`);
+    if (!username.value.match(/^[A-Za-z0-9_]+$/g))
+      errors.username.push(
+        `Username can't contain special characters, only _ (underscore) `
+      );
 
     // Password validations
     if (password.value.length < 8)
       errors.password.push(`Password must be at least 8 characters long`);
     if (password.value !== passwordAgain.value)
       errors.password.push(`Passwords are not the same`);
+
+    // Email validations
+    if (email.value !== emailAgain.value)
+      errors.email.push(`Emails are not the same`);
+    if (!email.value.match(/^(.+)@(.+).(.+)$/g))
+      errors.email.push(`Invalid email`);
 
     return errors;
   };

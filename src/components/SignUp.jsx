@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components/macro';
 import axios from 'axios';
 
@@ -55,26 +55,24 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const errors = validate();
-    console.log(errors);
-
     setValidationErrors(validate());
 
-    if (validationErrors.username.length > 0) {
-      console.log(validationErrors);
+    if (
+      validationErrors.username.length === 0 &&
+      validationErrors.password.length === 0 &&
+      validationErrors.email.length === 0
+    ) {
+      axios
+        .post('/api/users/new', {
+          username: username.value,
+          password: password.value,
+          email: email.value,
+        })
+        .then((res) => res.data)
+        .then((newUser) => {
+          console.log(newUser);
+        });
     }
-    // } else {
-    // axios
-    //   .post('/api/users/new', {
-    //     username: username.value,
-    //     password: password.value,
-    //     email: email.value,
-    //   })
-    //   .then((res) => res.data)
-    //   .then((newUser) => {
-    //     console.log(newUser);
-    //   });
-    // }
   };
 
   return (
@@ -84,15 +82,24 @@ const SignUp = () => {
         <FormFieldsWrapper>
           <label htmlFor="username">Username</label>
           <input type="text" placeholder="Username" {...username} />
+          {validationErrors.username.map((item, index) => {
+            return <ErrorMessage key={index}>{item}</ErrorMessage>;
+          })}
           <br />
           <label htmlFor="password">Password</label>
           <input type="text" placeholder="Password" {...password} />
           <input type="text" placeholder="Enter again" {...passwordAgain} />
-          {`is password valid: ${'asd'}`}
+          {validationErrors.password.map((item, index) => {
+            return <ErrorMessage key={index}>{item}</ErrorMessage>;
+          })}
           <br />
           <label htmlFor="email">Email</label>
           <input type="text" placeholder="Email" {...email} />
           <input type="text" placeholder="Enter again" {...emailAgain} />
+          {validationErrors.email.map((item, index) => {
+            return <ErrorMessage key={index}>{item}</ErrorMessage>;
+          })}
+
           <div>
             <MainButton onClick={handleSubmit}>Sign up</MainButton>
             <SecondaryButton>Log in</SecondaryButton>
@@ -115,6 +122,15 @@ const MainWrapper = styled.div`
 const FormFieldsWrapper = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const ErrorMessage = styled.p`
+  background-color: #fecaca;
+  color: #b91c1c;
+  margin: 5px 0px;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 0.85rem;
 `;
 
 export default SignUp;

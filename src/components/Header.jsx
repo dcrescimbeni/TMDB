@@ -11,15 +11,17 @@ const Header = ({ user }) => {
     navigate('/signup');
   };
 
+  const loginClickHandle = () => {
+    navigate('/login');
+  };
+
   return (
     <HeaderWrapper>
       <div>
         <Link to="/">MUUBI</Link>
       </div>
       <div>
-        <SecondaryButton onClick={() => console.log('works')}>
-          Log in
-        </SecondaryButton>
+        <SecondaryButton onClick={loginClickHandle}>Log in</SecondaryButton>
         <MainButton onClick={signupClickHandle}>Sign up</MainButton>
       </div>
     </HeaderWrapper>

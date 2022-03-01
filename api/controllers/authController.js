@@ -3,7 +3,7 @@ exports.loginGet = (req, res, next) => {
 };
 
 exports.secretGet = (req, res, next) => {
-  res.status(205).send(`You've accessed the chamber of forbidden secrets`);
+  res.send('login successful');
 };
 
 exports.logoutGet = (req, res, next) => {

@@ -203,74 +203,92 @@ describe('Users', () => {
         });
     });
   });
+});
 
-  describe('Authentication', () => {
-    describe('Login', () => {
-      it('Can successfully login', () => {
-        return agent
-          .post('/api/login')
-          .send({
-            username: 'testDino',
-            password: 'test',
-          })
-          .then((response) => {
-            expect(response).to.have.property(
-              'text',
-              'Found. Redirecting to /api/secret'
-            );
-          });
-      });
+describe('Authentication', () => {
+  let agent;
 
-      it(`Can't login if entered wrong credentials`, () => {
-        return agent
-          .post('/api/login')
-          .send({
-            username: 'testDino',
-            password: 'wrongPassword',
-          })
-          .then((response) => {
-            expect(response).to.have.property(
-              'text',
-              'Found. Redirecting to /api/login'
-            );
-          });
-      });
+  before(() => {
+    agent = supertest(app);
+
+    return agent.post('/api/users/new').send({
+      username: 'testlogin',
+      password: 'test',
+      email: 'dino@example.com',
+    });
+  });
+
+  after(() => {
+    return User.destroy({ where: { username: 'testlogin' } });
+  });
+
+  beforeEach(() => {});
+
+  describe('Login', () => {
+    it('Can successfully login', () => {
+      return agent
+        .post('/api/login')
+        .send({
+          username: 'testlogin',
+          password: 'test',
+        })
+        .then((response) => {
+          expect(response).to.have.property(
+            'text',
+            'Found. Redirecting to /api/secret'
+          );
+        });
     });
 
-    describe('Route navigation', () => {
-      let session;
+    it(`Can't login if entered wrong credentials`, () => {
+      return agent
+        .post('/api/login')
+        .send({
+          username: 'testlogin',
+          password: 'wrongPassword',
+        })
+        .then((response) => {
+          expect(response).to.have.property(
+            'text',
+            'Found. Redirecting to /api/login'
+          );
+        });
+    });
+  });
 
-      beforeEach(() => {
-        session = null;
-      });
+  describe('Route navigation', () => {
+    let session;
 
-      it('User can logout', () => {
-        return agent
-          .post('/api/login')
-          .send({
-            username: 'testDino',
-            password: 'test',
-          })
-          .then((res) => {
-            session = res.header['set-cookie'];
-          })
-          .then(() =>
-            agent.get('/api/users/user/testDino').set('Cookie', session)
-          )
-          .then((response) => response.body)
-          .then((userData) => {
-            expect(userData).to.have.property('isOwner', true);
-          })
-          .then((res) => {
-            return agent.get('/api/logout').set('Cookie', session);
-          })
-          .then((res) => {
-            expect(res).to.have.property(
-              'text',
-              'Found. Redirecting to /api/login'
-            );
-          });
-      });
+    beforeEach(() => {
+      session = null;
+    });
+
+    it('User can logout', () => {
+      return agent
+        .post('/api/login')
+        .send({
+          username: 'testlogin',
+          password: 'test',
+        })
+        .then((res) => {
+          session = res.header['set-cookie'];
+        })
+        .then(() =>
+          agent.get('/api/users/user/testlogin').set('Cookie', session)
+        )
+        .then((response) => response.body)
+        .then((userData) => {
+          expect(userData).to.have.property('isOwner', true);
+        })
+        .then((res) => {
+          return agent.get('/api/logout').set('Cookie', session);
+        })
+        .then((res) => {
+          expect(res).to.have.property(
+            'text',
+            'Found. Redirecting to /api/login'
+          );
+        });
     });
   });
 });

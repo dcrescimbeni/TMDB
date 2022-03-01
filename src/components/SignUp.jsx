@@ -76,7 +76,7 @@ const SignUp = () => {
         .catch((err) => {
           const errors = initialStateErrors;
           errors.username.push(`Username already exists`);
-          setValidationErrors(initialStateErrors);
+          setValidationErrors(errors);
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

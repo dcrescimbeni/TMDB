@@ -5,6 +5,7 @@ import axios from 'axios';
 import useInput from '../hooks/useInput';
 import MainButton from '../commons/MainButton';
 import SecondaryButton from '../commons/SecondaryButton';
+import InputField from '../commons/InputField';
 
 const SignUp = () => {
   const username = useInput('');
@@ -91,21 +92,25 @@ const SignUp = () => {
       <form onSubmit={handleSubmit}>
         <FormFieldsWrapper>
           <label htmlFor="username">Username</label>
-          <input type="text" placeholder="Username" {...username} />
+          <InputField type="text" placeholder="Username" {...username} />
           {validationErrors.username.map((item, index) => {
             return <ErrorMessage key={index}>{item}</ErrorMessage>;
           })}
           <br />
           <label htmlFor="password">Password</label>
-          <input type="text" placeholder="Password" {...password} />
-          <input type="text" placeholder="Enter again" {...passwordAgain} />
+          <InputField type="password" placeholder="Password" {...password} />
+          <InputField
+            type="password"
+            placeholder="Enter again"
+            {...passwordAgain}
+          />
           {validationErrors.password.map((item, index) => {
             return <ErrorMessage key={index}>{item}</ErrorMessage>;
           })}
           <br />
           <label htmlFor="email">Email</label>
-          <input type="text" placeholder="Email" {...email} />
-          <input type="text" placeholder="Enter again" {...emailAgain} />
+          <InputField type="text" placeholder="Email" {...email} />
+          <InputField type="text" placeholder="Enter again" {...emailAgain} />
           {validationErrors.email.map((item, index) => {
             return <ErrorMessage key={index}>{item}</ErrorMessage>;
           })}

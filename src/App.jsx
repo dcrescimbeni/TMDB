@@ -29,7 +29,8 @@ const App = () => {
       <Routes>
         <Route path="/media/search" element={<Content />} />
         <Route path="/media/single/:id" element={<MediaDetails />} />
-        <Route path="/users/new" element={<SignUp />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<SignUp />} />
       </Routes>
     </>
   );

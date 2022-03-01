@@ -8,7 +8,7 @@ const Header = ({ user }) => {
   const navigate = useNavigate();
 
   const signupClickHandle = () => {
-    navigate('/users/new');
+    navigate('/signup');
   };
 
   return (
@@ -17,12 +17,10 @@ const Header = ({ user }) => {
         <Link to="/">MUUBI</Link>
       </div>
       <div>
-        <SecondaryButton value={'Log in'} onClick={() => console.log('works')}>
+        <SecondaryButton onClick={() => console.log('works')}>
           Log in
         </SecondaryButton>
-        <MainButton value={'Log in'} onClick={signupClickHandle}>
-          Sign up
-        </MainButton>
+        <MainButton onClick={signupClickHandle}>Sign up</MainButton>
       </div>
     </HeaderWrapper>
   );

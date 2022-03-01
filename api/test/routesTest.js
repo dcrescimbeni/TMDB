@@ -81,6 +81,24 @@ describe('Users', () => {
             expect(createdUser.password).to.not.equal('test');
           });
       });
+
+      it('Checks for an existent user before creation', () => {
+        return agent
+          .get('/api/users/exist?q=testdino')
+          .then((response) => response.body)
+          .then((userExist) => {
+            expect(userExist).to.equals(true);
+          });
+      });
+
+      it('Checks for a non existent user before creation', () => {
+        return agent
+          .get('/api/users/exist?q=afsdflkj123098')
+          .then((response) => response.body)
+          .then((userExist) => {
+            expect(userExist).to.equals(false);
+          });
+      });
     });
 
     describe('Search user', () => {

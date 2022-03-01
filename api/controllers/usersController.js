@@ -12,6 +12,19 @@ exports.usersCreateNew = (req, res, next) => {
     .catch((err) => next(err));
 };
 
+exports.usersCheckIfUserExists = (req, res, next) => {
+  const username = req.query.q;
+  console.log(username);
+
+  User.findOne({ where: { username } }).then((user) => {
+    if (!user) {
+      res.send(false);
+    } else {
+      res.send(true);
+    }
+  });
+};
+
 exports.usersSearch = (req, res, next) => {
   const userSearch = req.query.query;
   console.log(userSearch);

@@ -6,6 +6,7 @@ const isOwnUser = require('../controllers/authController').isOwnUser;
 usersRouter.post('/new', usersController.usersCreateNew);
 usersRouter.get('/user/:username', usersController.usersProfile);
 usersRouter.get('/search', usersController.usersSearch);
+usersRouter.get('/exist', usersController.usersCheckIfUserExists);
 
 // Favorites routes
 

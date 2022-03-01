@@ -299,10 +299,8 @@ describe('Authentication', () => {
           return agent.get('/api/logout').set('Cookie', session);
         })
         .then((res) => {
-          expect(res).to.have.property(
-            'text',
-            'Found. Redirecting to /api/login'
-          );
+          console.log(res.text);
+          expect(res).to.have.property('text', 'logout successful');
         });
     });
   });

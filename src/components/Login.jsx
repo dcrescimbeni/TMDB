@@ -57,13 +57,9 @@ const Login = () => {
           username: username.value,
           password: password.value,
         })
-        .then((res) => {
-          console.log(res);
-          return res.data;
-        })
+        .then((res) => res.data)
         .then((isAuthenticated) => {
           if (isAuthenticated === 'login successful') {
-            console.log(username.value);
             userDetails.toggleAuth(username.value);
             navigate('/');
           } else {

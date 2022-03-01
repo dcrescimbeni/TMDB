@@ -8,7 +8,7 @@ exports.secretGet = (req, res, next) => {
 
 exports.logoutGet = (req, res, next) => {
   req.logout();
-  res.redirect('/api/login');
+  res.send('logout successful');
 };
 
 exports.isAuth = (req, res, next) => {

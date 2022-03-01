@@ -8,6 +8,7 @@ import SearchBar from './commons/SearchBar';
 import Content from './components/Content';
 import MediaDetails from './components/MediaDetails';
 import SignUp from './components/SignUp';
+import Login from './components/Login';
 
 const App = () => {
   const [user, setUser] = useState('dinocrescimbeni');
@@ -30,7 +31,7 @@ const App = () => {
         <Route path="/media/search" element={<Content />} />
         <Route path="/media/single/:id" element={<MediaDetails />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </>
   );

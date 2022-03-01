@@ -12,6 +12,7 @@ User.init(
       unique: true,
       validate: {
         is: /^[A-Za-z0-9_]+$/g,
+        len: [3, 23],
       },
     },
     password: {

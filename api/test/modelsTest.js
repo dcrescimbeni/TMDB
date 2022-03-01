@@ -83,6 +83,38 @@ describe('User model', () => {
           expect(user.originalUsername).to.equal('testOriginalUsername');
         });
     });
+
+    it('Username cannot be less than 3 characters', () => {
+      return User.create({
+        username: 'as',
+        password,
+        email,
+      })
+        .then((createdUser) => createdUser.dataValues)
+        .then((newUser) => {
+          expect(newUser).to.not.have.property('id');
+        })
+        .catch((err) => {
+          expect(err.errors).to.have.lengthOf(1);
+          // expect(err.errors[0].type).to.equal('notNull Violation');
+        });
+    });
+
+    it('Username cannot be more than 23 characters', () => {
+      return User.create({
+        username: 'asdflkjhiqqwekhjasdfasdf',
+        password,
+        email,
+      })
+        .then((createdUser) => createdUser.dataValues)
+        .then((newUser) => {
+          expect(newUser).to.not.have.property('id');
+        })
+        .catch((err) => {
+          expect(err.errors).to.have.lengthOf(1);
+          // expect(err.errors[0].type).to.equal('notNull Violation');
+        });
+    });
   });
 
   describe('User creation validations', () => {

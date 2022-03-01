@@ -1,13 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components/macro';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 import useInput from '../hooks/useInput';
 import MainButton from '../commons/MainButton';
 import SecondaryButton from '../commons/SecondaryButton';
 import InputField from '../commons/InputField';
+import { AuthContext } from '../AuthContext';
 
 const SignUp = () => {
+  const navigate = useNavigate();
+  const userDetails = useContext(AuthContext);
+
   const username = useInput('');
   const password = useInput('');
   const passwordAgain = useInput('');
@@ -20,6 +25,14 @@ const SignUp = () => {
     password: [],
     email: [],
   };
+
+  useEffect(() => {
+    let isLoggedIn = userDetails.user;
+    if (isLoggedIn) {
+      navigate('/');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userDetails]);
 
   const [validationErrors, setValidationErrors] = useState(initialStateErrors);
 

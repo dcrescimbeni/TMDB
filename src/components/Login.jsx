@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components/macro';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -7,17 +7,28 @@ import useInput from '../hooks/useInput';
 import MainButton from '../commons/MainButton';
 import SecondaryButton from '../commons/SecondaryButton';
 import InputField from '../commons/InputField';
+import { AuthContext } from '../AuthContext';
 
 const Login = () => {
+  const navigate = useNavigate();
+  const userDetails = useContext(AuthContext);
+
   const username = useInput('');
   const password = useInput('');
-  const navigate = useNavigate();
 
   const initialStateErrors = {
     username: [],
     password: [],
     general: [],
   };
+
+  useEffect(() => {
+    let isLoggedIn = userDetails.user;
+    if (isLoggedIn) {
+      navigate('/');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userDetails]);
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loginErrors, setLoginErrors] = useState(initialStateErrors);
@@ -52,6 +63,8 @@ const Login = () => {
         })
         .then((isAuthenticated) => {
           if (isAuthenticated === 'login successful') {
+            console.log(username.value);
+            userDetails.toggleAuth(username.value);
             navigate('/');
           } else {
             const errors = initialStateErrors;

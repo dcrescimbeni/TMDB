@@ -9,6 +9,7 @@ import Content from './components/Content';
 import MediaDetails from './components/MediaDetails';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
+import AuthContextProvider from './AuthContext';
 
 const App = () => {
   const [user, setUser] = useState('dinocrescimbeni');
@@ -20,12 +21,20 @@ const App = () => {
   };
 
   return (
-    <>
+    <AuthContextProvider>
       <GlobalStyles />
       <Header user={user} />
-      <h1>
-        Find <WordAccent>any</WordAccent> movie or TV show
-      </h1>
+      <Routes>
+        <Route
+          path={'/'}
+          element={
+            <h1>
+              Find <WordAccent>any</WordAccent> movie or TV show
+            </h1>
+          }
+        />
+      </Routes>
+
       <SearchBar handleSubmit={handleSubmit} />
       <Routes>
         <Route path="/media/search" element={<Content />} />
@@ -33,7 +42,7 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
       </Routes>
-    </>
+    </AuthContextProvider>
   );
 };
 

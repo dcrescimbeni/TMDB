@@ -15,19 +15,17 @@ const SignUp = () => {
   const emailAgain = useInput('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const [validationErrors, setValidationErrors] = useState({
+  const initialStateErrors = {
     username: [],
     password: [],
     email: [],
-  });
+  };
+
+  const [validationErrors, setValidationErrors] = useState(initialStateErrors);
 
   // Validations
   const validate = () => {
-    const errors = {
-      username: [],
-      password: [],
-      email: [],
-    };
+    const errors = initialStateErrors;
 
     // Username validations
     if (username.value.length < 3)
@@ -76,11 +74,9 @@ const SignUp = () => {
         .then((res) => res.data)
         .then((newUser) => console.log(newUser))
         .catch((err) => {
-          setValidationErrors({
-            username: [`Username already exists`],
-            password: [],
-            email: [],
-          });
+          const errors = initialStateErrors;
+          errors.username.push(`Username already exists`);
+          setValidationErrors(initialStateErrors);
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

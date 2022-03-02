@@ -89,6 +89,7 @@ exports.usersFavList = (req, res, next) => {
 };
 
 exports.usersFavPost = (req, res, next) => {
+  // TODO: Handle favorite duplication
   const { mediaId, type } = req.body;
   const userId = req.user.dataValues.id;
 

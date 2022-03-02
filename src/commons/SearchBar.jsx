@@ -1,7 +1,7 @@
 import useInput from '../hooks/useInput';
 
 const SearchBar = ({ handleSubmit }) => {
-  const searchQuery = useInput('lets test this');
+  const searchQuery = useInput('');
 
   return (
     <div>
@@ -10,7 +10,12 @@ const SearchBar = ({ handleSubmit }) => {
           handleSubmit(event, searchQuery.value);
         }}
       >
-        <input type="text" name="search" {...searchQuery} />
+        <input
+          type="text"
+          name="search"
+          {...searchQuery}
+          placeholder="Search..."
+        />
       </form>
     </div>
   );

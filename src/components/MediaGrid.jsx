@@ -8,8 +8,11 @@ const MediaGrid = ({ searchResults }) => {
     <GridWrapper>
       {searchResults.map((item, index) => {
         return (
-          <Link to={`/media/single/${item.id}?type=${item.media_type}`}>
-            <MediaCard mediaDetails={item} key={index} />
+          <Link
+            to={`/media/single/${item.id}?type=${item.media_type}`}
+            key={index}
+          >
+            <MediaCard mediaDetails={item} />
           </Link>
         );
       })}

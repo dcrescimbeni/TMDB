@@ -74,6 +74,7 @@ exports.usersFavList = (req, res, next) => {
           .then((res) => res.data)
           .then((data) => {
             item.dataValues.tmdbDetails = data;
+            item.dataValues.tmdbDetails.media_type = item.type;
             return item;
           });
       });
@@ -100,7 +101,7 @@ exports.usersFavPost = (req, res, next) => {
 };
 
 exports.usersFavDelete = (req, res, next) => {
-  const { mediaId, type } = req.body;
+  const { mediaId, type } = req.query;
   const userId = req.user.dataValues.id;
   Favorite.destroy({ where: { mediaId, userId, type } })
     .then((deletedMovie) => {

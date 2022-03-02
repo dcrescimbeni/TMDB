@@ -4,25 +4,15 @@ import styled from 'styled-components/macro';
 
 import noPosterAvailable from '../assets/noPosterAvailable.jpg';
 import { AuthContext } from '../AuthContext';
+import FavoriteButton from './FavoriteButton';
 
-const MediaCard = ({ mediaDetails }) => {
+const MediaCard = ({ mediaDetails, mediaList, setMediaList }) => {
   let scoreAverage =
     mediaDetails.vote_average > 0
       ? Math.round(mediaDetails.vote_average)
       : null;
 
   const userDetails = useContext(AuthContext);
-
-  const handleAddFavorite = (e) => {
-    e.preventDefault();
-    axios
-      .post(`/api/users/user/${userDetails.user}/fav`, {
-        mediaId: mediaDetails.id,
-        type: mediaDetails.media_type,
-      })
-      .then((res) => console.log(res));
-    console.log('FAV!');
-  };
 
   return (
     <Wrapper>
@@ -42,7 +32,12 @@ const MediaCard = ({ mediaDetails }) => {
 
       <ShadowOverlayWrapper>
         {userDetails.user ? (
-          <button onClick={handleAddFavorite}>Fav</button>
+          <FavoriteButton
+            mediaId={mediaDetails.id}
+            type={mediaDetails.media_type}
+            mediaList={mediaList}
+            setMediaList={setMediaList}
+          />
         ) : null}
         <MovieTitleWrapper>
           <MovieTitle>

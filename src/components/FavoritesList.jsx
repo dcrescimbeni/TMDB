@@ -23,7 +23,7 @@ const FavoritesList = () => {
   return (
     <div>
       User favorites {username}
-      <MediaGrid mediaList={userFavorites} />
+      <MediaGrid mediaList={userFavorites} setMediaList={setUserFavorites} />
     </div>
   );
 };

@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 
 import MediaCard from '../commons/MediaCard';
 
-const MediaGrid = ({ mediaList }) => {
+const MediaGrid = ({ mediaList, setMediaList }) => {
   return (
     <GridWrapper>
       {mediaList.map((item, index) => {
@@ -12,7 +12,11 @@ const MediaGrid = ({ mediaList }) => {
             to={`/media/single/${item.id}?type=${item.media_type}`}
             key={index}
           >
-            <MediaCard mediaDetails={item} />
+            <MediaCard
+              mediaDetails={item}
+              mediaList={mediaList}
+              setMediaList={setMediaList}
+            />
           </Link>
         );
       })}

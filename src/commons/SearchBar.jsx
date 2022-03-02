@@ -3,8 +3,10 @@ import useInput from '../hooks/useInput';
 import styled from 'styled-components/macro';
 import { BiSearchAlt } from 'react-icons/bi';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import SearchPreviewCard from './SearchPreviewCard';
+import MainButton from './MainButton.jsx';
 
 const SearchBar = ({ handleSubmit }) => {
   const searchQuery = useInput('');
@@ -16,11 +18,17 @@ const SearchBar = ({ handleSubmit }) => {
         .get(`/api/media/search?query=${searchQuery.value}`)
         .then((res) => res.data)
         .then((results) => {
-          setSearchPreview(results);
-          console.log(results);
+          let filteredResults = results.filter((result) => {
+            return result.media_type === 'movie' || result.media_type === 'tv';
+          });
+          let topThreeResults = filteredResults.slice(0, 3);
+          setSearchPreview(topThreeResults);
+          console.log(topThreeResults);
         });
     }
   }, [searchQuery.value]);
+
+  const moreResultsHandle = () => {};
 
   return (
     <div>
@@ -44,9 +52,20 @@ const SearchBar = ({ handleSubmit }) => {
         <div>All - Movies - TV - Users</div>
         <div>
           {searchPreview.map((item) => {
-            return <SearchPreviewCard mediaItem={item} />;
+            return (
+              <Link to={`/media/single/${item.id}?type=${item.media_type}`}>
+                <SearchPreviewCard mediaItem={item} />
+              </Link>
+            );
           })}
         </div>
+        <MainButton
+          onClick={(event) => {
+            handleSubmit(event, searchQuery.value);
+          }}
+        >
+          More results
+        </MainButton>
       </SearchResultsPreview>
     </div>
   );
@@ -72,9 +91,13 @@ const SearchInput = styled.input`
 `;
 
 const SearchResultsPreview = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 580px;
   border-radius: 20px;
   background-color: #f6f6f6;
+  padding: 30px;
 `;
 
 export default SearchBar;

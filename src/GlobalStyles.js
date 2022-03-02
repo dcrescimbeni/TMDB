@@ -70,5 +70,7 @@ h3 {font-size: 1.953rem;}
 h4 {font-size: 1.563rem;}
 
 h5 {font-size: 1.25rem;}
+
+a {text-decoration: none}
 `;
 export default GlobalStyles;

@@ -314,9 +314,12 @@ describe('Favorite model', () => {
         })
         .then((createdFavorite) => createdFavorite.dataValues)
         .then((favorite) => {
+          console.log('FAVORITE DUPLICATION');
+          console.log(favorite);
           expect(favorite).to.not.exist();
         })
         .catch((err) => {
+          console.log(err);
           expect(err.message).to.equal('Validation error: Duplicated favorite');
         });
     });

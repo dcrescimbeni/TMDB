@@ -367,6 +367,15 @@ describe('Favorites', () => {
         .send({
           mediaId: 424694,
           type: 'movie',
+        })
+        .then(() => {
+          return agent
+            .delete('/api/users/user/favoritetesting/fav')
+            .set('Cookie', session)
+            .send({
+              mediaId: 424694,
+              type: 'tv',
+            });
         });
     });
 
@@ -387,7 +396,7 @@ describe('Favorites', () => {
         });
     });
 
-    xit(`Can't add a favorite with the same mediaId and type`, () => {
+    it(`Can't add a favorite with the same mediaId and type`, () => {
       return agent
         .post('/api/users/user/favoritetesting/fav')
         .set('Cookie', session)
@@ -395,15 +404,25 @@ describe('Favorites', () => {
           mediaId: 424694,
           type: 'movie',
         })
-        .then((res) => {
-          expect(res).to.not.exist();
-        })
-        .catch((err) => {
-          expect(err.message).to.equal('Duplicated favorite');
-        });
+        .expect(500);
     });
 
-    it(`Can add a favorite with the same mediaId but different type`, () => {});
+    it(`Can add a favorite with the same mediaId but different type`, () => {
+      return agent
+        .post('/api/users/user/favoritetesting/fav')
+        .set('Cookie', session)
+        .send({
+          mediaId: 424694,
+          type: 'tv',
+        })
+        .expect(201)
+        .then((res) => {
+          expect(res.body).to.have.property('id');
+          expect(res.body).to.have.property('userId');
+          expect(res.body).to.have.property('mediaId', 424694);
+          expect(res.body).to.have.property('type', 'tv');
+        });
+    });
   });
 
   describe('Deleting favorites', () => {

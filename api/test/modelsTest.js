@@ -292,5 +292,65 @@ describe('Favorite model', () => {
           expect(err.name).to.equal('SequelizeDatabaseError');
         });
     });
+
+    it(`Can't duplicate a favorite with the same mediaId and type`, () => {
+      return Favorite.create({
+        mediaId: 400,
+        userId: testUserId,
+        type: 'movie',
+      })
+        .then((createdFavorite) => createdFavorite.dataValues)
+        .then((favorite) => {
+          expect(favorite).to.have.property('id');
+          expect(favorite).to.have.property('mediaId', 400);
+          expect(favorite).to.have.property('userId');
+        })
+        .then(() => {
+          return Favorite.create({
+            mediaId: 400,
+            userId: testUserId,
+            type: 'movie',
+          });
+        })
+        .then((createdFavorite) => createdFavorite.dataValues)
+        .then((favorite) => {
+          expect(favorite).to.not.exist();
+        })
+        .catch((err) => {
+          expect(err.message).to.equal('Duplicated favorite');
+        });
+    });
+
+    it(`Can save a favorite with the same mediaId and different type`, () => {
+      return Favorite.create({
+        mediaId: 400,
+        userId: testUserId,
+        type: 'movie',
+      })
+        .then((createdFavorite) => createdFavorite.dataValues)
+        .then((favorite) => {
+          expect(favorite).to.have.property('id');
+          expect(favorite).to.have.property('mediaId', 400);
+          expect(favorite).to.have.property('type', 'movie');
+          expect(favorite).to.have.property('userId');
+        })
+        .then(() => {
+          return Favorite.create({
+            mediaId: 400,
+            userId: testUserId,
+            type: 'tv',
+          });
+        })
+        .then((createdFavorite) => createdFavorite.dataValues)
+        .then((favorite) => {
+          expect(favorite).to.have.property('id');
+          expect(favorite).to.have.property('mediaId', 400);
+          expect(favorite).to.have.property('type', 'tv');
+          expect(favorite).to.have.property('userId');
+        })
+        .catch((err) => {
+          expect(err).to.not.exist();
+        });
+    });
   });
 });

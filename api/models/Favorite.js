@@ -17,4 +17,13 @@ Favorite.init(
   { sequelize: db, modelName: 'favorites' }
 );
 
+Favorite.afterValidate((favorite) => {
+  const { mediaId, type } = favorite;
+  return Favorite.findOne({ where: { mediaId, type } }).then(
+    (foundFavorite) => {
+      if (foundFavorite) throw new Error('Duplicated favorite');
+    }
+  );
+});
+
 module.exports = Favorite;

@@ -8,6 +8,7 @@ import SearchResultsPreview from './SearchResultsPreview';
 
 const SearchBar = ({ handleSubmit }) => {
   const searchQuery = useInput('');
+  const [fullSearchResults, setFullSearchResults] = useState([]);
   const [searchPreview, setSearchPreview] = useState([]);
   const [resultsPreviewIsVisible, setResultsPreviewIsVisible] = useState(false);
   const [focusSearchBar, setFocusSearchBar] = useState(false);
@@ -38,32 +39,30 @@ const SearchBar = ({ handleSubmit }) => {
             return result.media_type === 'movie' || result.media_type === 'tv';
           });
 
-          let filterByType = filterMovieAndTV.map((media) => {
-            if (selectedButton === 'all-btn') return media;
-
-            if (
-              selectedButton === 'movies-btn' &&
-              media.media_type === 'movie'
-            ) {
-              return media;
-            }
-
-            if (selectedButton === 'tv-btn' && media.media_type === 'tv') {
-              return media;
-            }
-          });
-
-          let topThreeResults = filterByType.slice(0, 3);
-          setSearchPreview(topThreeResults);
-          console.log(topThreeResults);
+          setFullSearchResults(filterMovieAndTV);
         });
     }
-  }, [searchQuery.value, selectedButton]);
+  }, [searchQuery.value]);
+
+  useEffect(() => {
+    let filterByType = fullSearchResults.map((media) => {
+      if (selectedButton === 'all-btn') return media;
+      if (selectedButton === 'movies-btn' && media.media_type === 'movie') {
+        return media;
+      }
+      if (selectedButton === 'tv-btn' && media.media_type === 'tv') {
+        return media;
+      }
+    });
+
+    let topThreeResults = filterByType.slice(0, 3);
+    setSearchPreview(topThreeResults);
+  }, [fullSearchResults, selectedButton]);
 
   return (
     <div
       onFocus={() => setFocusSearchBar(true)}
-      onBlur={() => setFocusSearchBar(true)}
+      onBlur={() => setFocusSearchBar(false)}
     >
       <form
         autoComplete="off"

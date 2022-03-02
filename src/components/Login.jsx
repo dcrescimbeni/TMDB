@@ -68,7 +68,6 @@ const Login = () => {
             setLoginErrors(errors);
           }
         });
-      console.log('SUBMIT!');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginErrors, isSubmitted]);

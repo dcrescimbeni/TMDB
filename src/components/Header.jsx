@@ -30,6 +30,11 @@ const Header = () => {
       : setIsTooltipVisible('hidden');
   };
 
+  const favoritesClickHandle = () => {
+    setIsTooltipVisible('hidden');
+    navigate(`/users/user/${userDetails.user}`);
+  };
+
   const logoutClickHandle = () => {
     setIsTooltipVisible('hidden');
 
@@ -45,7 +50,7 @@ const Header = () => {
         <div>
           <button onClick={showUserOptions}>{userDetails.user}</button>
           <UserOptions>
-            <p>Favorites</p>
+            <button onClick={favoritesClickHandle}>Favorites</button>
             <button onClick={logoutClickHandle}>Logout</button>
           </UserOptions>
         </div>

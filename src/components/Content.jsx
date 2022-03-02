@@ -14,15 +14,15 @@ const Content = () => {
     axios
       .get(`/api/media/search?query=${searchParams.get('query')}`)
       .then((res) => res.data)
-      .then((movies) => {
-        console.log(movies);
-        setSearchResults(movies);
+      .then((results) => {
+        console.log(results);
+        setSearchResults(results);
       });
   }, [searchParams]);
 
   return (
     <ContentWrapper>
-      <MediaGrid searchResults={searchResults} />
+      <MediaGrid mediaList={searchResults} />
     </ContentWrapper>
   );
 };

@@ -3,10 +3,10 @@ import styled from 'styled-components/macro';
 
 import MediaCard from '../commons/MediaCard';
 
-const MediaGrid = ({ searchResults }) => {
+const MediaGrid = ({ mediaList }) => {
   return (
     <GridWrapper>
-      {searchResults.map((item, index) => {
+      {mediaList.map((item, index) => {
         return (
           <Link
             to={`/media/single/${item.id}?type=${item.media_type}`}

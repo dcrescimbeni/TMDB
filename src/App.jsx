@@ -41,7 +41,7 @@ const App = () => {
         <Route path="/media/single/:id" element={<MediaDetails />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/users/user/:userId" element={<FavoritesList />} />
+        <Route path="/users/user/:username" element={<FavoritesList />} />
       </Routes>
     </AuthContextProvider>
   );

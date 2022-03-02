@@ -1,16 +1,32 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import useInput from '../hooks/useInput';
 import styled from 'styled-components/macro';
 import { BiSearchAlt } from 'react-icons/bi';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
-import SearchPreviewCard from './SearchPreviewCard';
-import MainButton from './MainButton.jsx';
+import SearchResultsPreview from './SearchResultsPreview';
 
 const SearchBar = ({ handleSubmit }) => {
   const searchQuery = useInput('');
   const [searchPreview, setSearchPreview] = useState([]);
+  const [resultsPreviewIsVisible, setResultsPreviewIsVisible] = useState(false);
+  const [focusSearchBar, setFocusSearchBar] = useState(false);
+  const [timerId, setTimerId] = useState(0);
+
+  useEffect(() => {
+    if (focusSearchBar === true) {
+      clearTimeout(timerId);
+      setResultsPreviewIsVisible(true);
+    }
+
+    if (focusSearchBar === false) {
+      let timer = setTimeout(() => {
+        setResultsPreviewIsVisible(false);
+      }, 150);
+      setTimerId(timer);
+    }
+  }, [focusSearchBar]);
 
   useEffect(() => {
     if (searchQuery.value.length > 3) {
@@ -28,10 +44,11 @@ const SearchBar = ({ handleSubmit }) => {
     }
   }, [searchQuery.value]);
 
-  const moreResultsHandle = () => {};
-
   return (
-    <div>
+    <div
+      onFocus={() => setFocusSearchBar(true)}
+      onBlur={() => setFocusSearchBar(false)}
+    >
       <form
         autoComplete="off"
         onSubmit={(event) => {
@@ -48,25 +65,13 @@ const SearchBar = ({ handleSubmit }) => {
           <BiSearchAlt color="#9c1de7" size="2rem" />
         </SearchBarWrapper>
       </form>
-      <SearchResultsPreview>
-        <div>All - Movies - TV - Users</div>
-        <div>
-          {searchPreview.map((item) => {
-            return (
-              <Link to={`/media/single/${item.id}?type=${item.media_type}`}>
-                <SearchPreviewCard mediaItem={item} />
-              </Link>
-            );
-          })}
-        </div>
-        <MainButton
-          onClick={(event) => {
-            handleSubmit(event, searchQuery.value);
-          }}
-        >
-          More results
-        </MainButton>
-      </SearchResultsPreview>
+      {resultsPreviewIsVisible ? (
+        <SearchResultsPreview
+          searchPreview={searchPreview}
+          handleSubmit={handleSubmit}
+          searchQuery={searchQuery}
+        />
+      ) : null}
     </div>
   );
 };
@@ -88,16 +93,6 @@ const SearchInput = styled.input`
   &:focus {
     outline: none;
   }
-`;
-
-const SearchResultsPreview = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 580px;
-  border-radius: 20px;
-  background-color: #f6f6f6;
-  padding: 30px;
 `;
 
 export default SearchBar;

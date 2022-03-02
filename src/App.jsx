@@ -24,31 +24,39 @@ const App = () => {
     <AuthContextProvider>
       <GlobalStyles />
       <Header />
-      <Routes>
-        <Route
-          path={'/'}
-          element={
-            <h1>
-              Find <WordAccent>any</WordAccent> movie or TV show
-            </h1>
-          }
-        />
-      </Routes>
+      <GlobalWrapper>
+        <Routes>
+          <Route
+            path={'/'}
+            element={
+              <h1>
+                Find <WordAccent>any</WordAccent> movie or TV show
+              </h1>
+            }
+          />
+        </Routes>
 
-      <SearchBar handleSubmit={handleSubmit} />
-      <Routes>
-        <Route path="/media/search" element={<Content />} />
-        <Route path="/media/single/:id" element={<MediaDetails />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/users/user/:username" element={<FavoritesList />} />
-      </Routes>
+        <SearchBar handleSubmit={handleSubmit} />
+        <Routes>
+          <Route path="/media/search" element={<Content />} />
+          <Route path="/media/single/:id" element={<MediaDetails />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/users/user/:username" element={<FavoritesList />} />
+        </Routes>
+      </GlobalWrapper>
     </AuthContextProvider>
   );
 };
 
 const WordAccent = styled.span`
   color: #9c1de7;
+`;
+
+const GlobalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export default App;

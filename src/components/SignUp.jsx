@@ -85,7 +85,19 @@ const SignUp = () => {
           email: email.value,
         })
         .then((res) => res.data)
-        .then((newUser) => console.log(newUser))
+        .then((newUser) => {
+          return axios.post('/api/login', {
+            username: username.value,
+            password: password.value,
+          });
+        })
+        .then((res) => res.data)
+        .then((isAuthenticated) => {
+          if (isAuthenticated === 'login successful') {
+            userDetails.toggleAuth(username.value);
+            navigate('/');
+          }
+        })
         .catch((err) => {
           const errors = initialStateErrors;
           errors.username.push(`Username already exists`);

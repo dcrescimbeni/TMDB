@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import useInput from '../hooks/useInput';
 import styled from 'styled-components/macro';
@@ -13,6 +12,7 @@ const SearchBar = ({ handleSubmit }) => {
   const [resultsPreviewIsVisible, setResultsPreviewIsVisible] = useState(false);
   const [focusSearchBar, setFocusSearchBar] = useState(false);
   const [timerId, setTimerId] = useState(0);
+  const [selectedButton, setSelectedButton] = useState('all-btn');
 
   useEffect(() => {
     if (focusSearchBar === true) {
@@ -34,20 +34,36 @@ const SearchBar = ({ handleSubmit }) => {
         .get(`/api/media/search?query=${searchQuery.value}`)
         .then((res) => res.data)
         .then((results) => {
-          let filteredResults = results.filter((result) => {
+          let filterMovieAndTV = results.filter((result) => {
             return result.media_type === 'movie' || result.media_type === 'tv';
           });
-          let topThreeResults = filteredResults.slice(0, 3);
+
+          let filterByType = filterMovieAndTV.map((media) => {
+            if (selectedButton === 'all-btn') return media;
+
+            if (
+              selectedButton === 'movies-btn' &&
+              media.media_type === 'movie'
+            ) {
+              return media;
+            }
+
+            if (selectedButton === 'tv-btn' && media.media_type === 'tv') {
+              return media;
+            }
+          });
+
+          let topThreeResults = filterByType.slice(0, 3);
           setSearchPreview(topThreeResults);
           console.log(topThreeResults);
         });
     }
-  }, [searchQuery.value]);
+  }, [searchQuery.value, selectedButton]);
 
   return (
     <div
       onFocus={() => setFocusSearchBar(true)}
-      onBlur={() => setFocusSearchBar(false)}
+      onBlur={() => setFocusSearchBar(true)}
     >
       <form
         autoComplete="off"
@@ -71,6 +87,8 @@ const SearchBar = ({ handleSubmit }) => {
           handleSubmit={handleSubmit}
           searchQuery={searchQuery}
           setFocusSearchBar={setFocusSearchBar}
+          selectedButton={selectedButton}
+          setSelectedButton={setSelectedButton}
         />
       ) : null}
     </div>

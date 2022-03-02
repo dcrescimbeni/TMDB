@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 
 import noPosterAvailable from '../assets/noPosterAvailable.jpg';
 
-const SearchPreviewCard = ({ mediaItem, setFocusSearchBar }) => {
+const SearchPreviewCard = ({ mediaItem }) => {
   let title;
 
   if (mediaItem.media_type === 'movie') {
@@ -24,11 +24,7 @@ const SearchPreviewCard = ({ mediaItem, setFocusSearchBar }) => {
   }
 
   return (
-    <Wrapper
-      onClick={() => {
-        setFocusSearchBar(false);
-      }}
-    >
+    <Wrapper>
       <CardWrapper>
         {mediaItem.poster_path ? (
           <Card

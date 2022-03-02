@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 
@@ -9,24 +10,61 @@ const SearchResultsPreview = ({
   handleSubmit,
   searchQuery,
   setFocusSearchBar,
+  selectedButton,
+  setSelectedButton,
 }) => {
+  const handleFilterButtonClick = (e) => {
+    setSelectedButton(e.target.name);
+  };
+
   return (
     <Wrapper>
       <Triangle></Triangle>
       <ResultsWrapper>
-        <div>All - Movies - TV - Users</div>
+        <FilterButtonsWrapper>
+          <FilterButton
+            name="all-btn"
+            selected={selectedButton}
+            onClick={handleFilterButtonClick}
+          >
+            All
+          </FilterButton>
+          <FilterButton
+            name="movies-btn"
+            selected={selectedButton}
+            onClick={handleFilterButtonClick}
+          >
+            Movies
+          </FilterButton>
+          <FilterButton
+            name="tv-btn"
+            selected={selectedButton}
+            onClick={handleFilterButtonClick}
+          >
+            TV
+          </FilterButton>
+          <FilterButton
+            name="users-btn"
+            selected={selectedButton}
+            onClick={handleFilterButtonClick}
+          >
+            Users
+          </FilterButton>
+        </FilterButtonsWrapper>
 
-        <div>
+        <div
+          onClick={() => {
+            setFocusSearchBar(false);
+          }}
+        >
           {searchPreview.map((item, index) => {
+            if (!item) return null;
             return (
               <Link
                 to={`/media/single/${item.id}?type=${item.media_type}`}
                 key={index}
               >
-                <SearchPreviewCard
-                  mediaItem={item}
-                  setFocusSearchBar={setFocusSearchBar}
-                />
+                <SearchPreviewCard mediaItem={item} />
               </Link>
             );
           })}
@@ -34,6 +72,7 @@ const SearchResultsPreview = ({
         <MainButton
           onClick={(event) => {
             handleSubmit(event, searchQuery.value);
+            setFocusSearchBar(false);
           }}
         >
           More results
@@ -60,6 +99,26 @@ const Triangle = styled.div`
   border-bottom: 20px solid #f6f6f6;
   margin: auto;
   margin-top: 10px;
+`;
+
+const FilterButtonsWrapper = styled.div`
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  margin-left: 65px;
+  margin-bottom: 5px;
+`;
+
+const FilterButton = styled.button`
+  padding: 10px 25px;
+  border: none;
+  color: #9c1de7;
+  background-color: #f6f6f6;
+  ${(props) => {
+    if (props.selected === props.name)
+      return `border-bottom: 5px solid #9c1de7;
+      font-weight: bold;`;
+  }}
 `;
 
 const ResultsWrapper = styled.div`

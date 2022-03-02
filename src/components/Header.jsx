@@ -7,7 +7,7 @@ import MainButton from '../commons/MainButton';
 import SecondaryButton from '../commons/SecondaryButton';
 import { AuthContext } from '../AuthContext';
 
-const Header = ({ user }) => {
+const Header = () => {
   const userDetails = useContext(AuthContext);
   const navigate = useNavigate();
   const [isTooltipVisible, setIsTooltipVisible] = useState('hidden');

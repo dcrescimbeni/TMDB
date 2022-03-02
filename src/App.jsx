@@ -10,9 +10,9 @@ import MediaDetails from './components/MediaDetails';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
 import AuthContextProvider from './AuthContext';
+import FavoritesList from './components/FavoritesList';
 
 const App = () => {
-  const [user, setUser] = useState('dinocrescimbeni');
   let navigate = useNavigate();
 
   const handleSubmit = (event, query) => {
@@ -23,7 +23,7 @@ const App = () => {
   return (
     <AuthContextProvider>
       <GlobalStyles />
-      <Header user={user} />
+      <Header />
       <Routes>
         <Route
           path={'/'}
@@ -41,6 +41,7 @@ const App = () => {
         <Route path="/media/single/:id" element={<MediaDetails />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/users/user/:userId" element={<FavoritesList />} />
       </Routes>
     </AuthContextProvider>
   );

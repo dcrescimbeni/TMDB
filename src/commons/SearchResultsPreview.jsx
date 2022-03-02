@@ -119,6 +119,10 @@ const FilterButton = styled.button`
       return `border-bottom: 5px solid #9c1de7;
       font-weight: bold;`;
   }}
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const ResultsWrapper = styled.div`

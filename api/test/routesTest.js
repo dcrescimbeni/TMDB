@@ -386,6 +386,24 @@ describe('Favorites', () => {
           expect(res.body).to.have.property('type', 'movie');
         });
     });
+
+    xit(`Can't add a favorite with the same mediaId and type`, () => {
+      return agent
+        .post('/api/users/user/favoritetesting/fav')
+        .set('Cookie', session)
+        .send({
+          mediaId: 424694,
+          type: 'movie',
+        })
+        .then((res) => {
+          expect(res).to.not.exist();
+        })
+        .catch((err) => {
+          expect(err.message).to.equal('Duplicated favorite');
+        });
+    });
+
+    it(`Can add a favorite with the same mediaId but different type`, () => {});
   });
 
   describe('Deleting favorites', () => {

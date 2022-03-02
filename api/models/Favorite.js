@@ -8,6 +8,19 @@ Favorite.init(
     mediaId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        customValidator(value) {
+          return Favorite.findOne({
+            where: {
+              mediaId: this.mediaId,
+              type: this.type,
+              userId: this.userId,
+            },
+          }).then((foundFavorite) => {
+            if (foundFavorite) throw new Error('Duplicated favorite');
+          });
+        },
+      },
     },
     type: {
       type: DataTypes.ENUM('movie', 'tv'),
@@ -16,14 +29,5 @@ Favorite.init(
   },
   { sequelize: db, modelName: 'favorites' }
 );
-
-Favorite.afterValidate((favorite) => {
-  const { mediaId, type } = favorite;
-  return Favorite.findOne({ where: { mediaId, type } }).then(
-    (foundFavorite) => {
-      if (foundFavorite) throw new Error('Duplicated favorite');
-    }
-  );
-});
 
 module.exports = Favorite;

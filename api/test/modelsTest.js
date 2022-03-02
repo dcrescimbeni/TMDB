@@ -289,7 +289,7 @@ describe('Favorite model', () => {
           expect(favorite).to.not.exist();
         })
         .catch((err) => {
-          expect(err.name).to.equal('SequelizeDatabaseError');
+          expect(err.name).to.equal('SequelizeValidationError');
         });
     });
 
@@ -317,7 +317,7 @@ describe('Favorite model', () => {
           expect(favorite).to.not.exist();
         })
         .catch((err) => {
-          expect(err.message).to.equal('Duplicated favorite');
+          expect(err.message).to.equal('Validation error: Duplicated favorite');
         });
     });
 

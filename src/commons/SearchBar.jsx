@@ -70,6 +70,7 @@ const SearchBar = ({ handleSubmit }) => {
           searchPreview={searchPreview}
           handleSubmit={handleSubmit}
           searchQuery={searchQuery}
+          setFocusSearchBar={setFocusSearchBar}
         />
       ) : null}
     </div>

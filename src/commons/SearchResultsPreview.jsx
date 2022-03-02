@@ -4,7 +4,12 @@ import { Link } from 'react-router-dom';
 import MainButton from './MainButton.jsx';
 import SearchPreviewCard from './SearchPreviewCard.jsx';
 
-const SearchResultsPreview = ({ searchPreview, handleSubmit, searchQuery }) => {
+const SearchResultsPreview = ({
+  searchPreview,
+  handleSubmit,
+  searchQuery,
+  setFocusSearchBar,
+}) => {
   return (
     <Wrapper>
       <Triangle></Triangle>
@@ -18,7 +23,10 @@ const SearchResultsPreview = ({ searchPreview, handleSubmit, searchQuery }) => {
                 to={`/media/single/${item.id}?type=${item.media_type}`}
                 key={index}
               >
-                <SearchPreviewCard mediaItem={item} />
+                <SearchPreviewCard
+                  mediaItem={item}
+                  setFocusSearchBar={setFocusSearchBar}
+                />
               </Link>
             );
           })}

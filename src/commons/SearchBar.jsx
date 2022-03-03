@@ -14,6 +14,7 @@ const SearchBar = ({ handleSubmit }) => {
   const [focusSearchBar, setFocusSearchBar] = useState(false);
   const [timerId, setTimerId] = useState(0);
   const [selectedButton, setSelectedButton] = useState('all-btn');
+  const [isSearchingUsers, setIsSearchingUsers] = useState(true);
 
   useEffect(() => {
     if (focusSearchBar === true) {
@@ -31,18 +32,26 @@ const SearchBar = ({ handleSubmit }) => {
 
   useEffect(() => {
     if (searchQuery.value.length > 3) {
-      axios
-        .get(`/api/media/search?query=${searchQuery.value}`)
-        .then((res) => res.data)
-        .then((results) => {
-          let filterMovieAndTV = results.filter((result) => {
-            return result.media_type === 'movie' || result.media_type === 'tv';
+      if (isSearchingUsers) {
+        axios
+          .get(`/api/users/search?query=${searchQuery.value}`)
+          .then((res) => res.data)
+          .then((users) => setFullSearchResults(users));
+      } else {
+        axios
+          .get(`/api/media/search?query=${searchQuery.value}`)
+          .then((res) => res.data)
+          .then((results) => {
+            let filterMovieAndTV = results.filter((result) => {
+              return (
+                result.media_type === 'movie' || result.media_type === 'tv'
+              );
+            });
+            setFullSearchResults(filterMovieAndTV);
           });
-
-          setFullSearchResults(filterMovieAndTV);
-        });
+      }
     }
-  }, [searchQuery.value]);
+  }, [searchQuery.value, isSearchingUsers]);
 
   useEffect(() => {
     let filterByType = fullSearchResults.map((media) => {
@@ -51,6 +60,9 @@ const SearchBar = ({ handleSubmit }) => {
         return media;
       }
       if (selectedButton === 'tv-btn' && media.media_type === 'tv') {
+        return media;
+      }
+      if (selectedButton === 'users-btn') {
         return media;
       }
     });
@@ -62,7 +74,7 @@ const SearchBar = ({ handleSubmit }) => {
   return (
     <div
       onFocus={() => setFocusSearchBar(true)}
-      onBlur={() => setFocusSearchBar(false)}
+      onBlur={() => setFocusSearchBar(true)}
     >
       <form
         autoComplete="off"
@@ -88,6 +100,8 @@ const SearchBar = ({ handleSubmit }) => {
           setFocusSearchBar={setFocusSearchBar}
           selectedButton={selectedButton}
           setSelectedButton={setSelectedButton}
+          isSearchingUsers={isSearchingUsers}
+          setIsSearchingUsers={setIsSearchingUsers}
         />
       ) : null}
     </div>

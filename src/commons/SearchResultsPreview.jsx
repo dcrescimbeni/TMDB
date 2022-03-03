@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
+import { BiUser } from 'react-icons/bi';
 
 import MainButton from './MainButton.jsx';
 import SearchPreviewCard from './SearchPreviewCard.jsx';
@@ -12,9 +13,13 @@ const SearchResultsPreview = ({
   setFocusSearchBar,
   selectedButton,
   setSelectedButton,
+  isSearchingUsers,
+  setIsSearchingUsers,
 }) => {
   const handleFilterButtonClick = (e) => {
     setSelectedButton(e.target.name);
+    if (e.target.name === 'users-btn') setIsSearchingUsers(true);
+    else setIsSearchingUsers(false);
   };
 
   return (
@@ -52,13 +57,24 @@ const SearchResultsPreview = ({
           </FilterButton>
         </FilterButtonsWrapper>
 
-        <div
+        <SearchPreviewWrapper
           onClick={() => {
             setFocusSearchBar(false);
           }}
         >
           {searchPreview.map((item, index) => {
             if (!item) return null;
+            if (item.originalUsername) {
+              return (
+                <Link to={`/users/user/${item.username}`}>
+                  <UserCard>
+                    <BiUser size={'2rem'} />
+                    <h5>{item.originalUsername}</h5>
+                  </UserCard>
+                </Link>
+              );
+            }
+            console.log(item);
             return (
               <Link
                 to={`/media/single/${item.id}?type=${item.media_type}`}
@@ -68,7 +84,7 @@ const SearchResultsPreview = ({
               </Link>
             );
           })}
-        </div>
+        </SearchPreviewWrapper>
         <MainButton
           onClick={(event) => {
             handleSubmit(event, searchQuery.value);
@@ -125,6 +141,10 @@ const FilterButton = styled.button`
   }
 `;
 
+const SearchPreviewWrapper = styled.div`
+  margin-bottom: 10px;
+`;
+
 const ResultsWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -135,3 +155,14 @@ const ResultsWrapper = styled.div`
   padding: 30px;
   margin-left: -17px;
 `;
+
+const UserCard = styled.div`
+  display: flex;
+  margin: 15px 0px;
+  padding: 20px;
+  width: 100%;
+  border-bottom: 2px solid #9c1de7;
+  align-items: center;
+`;
+
+const Username = styled.h5``;

@@ -7,7 +7,7 @@ import MediaGrid from './MediaGrid';
 
 const Content = () => {
   const [searchResults, setSearchResults] = useState([]);
-  let [searchParams, setSearchParams] = useSearchParams();
+  let [searchParams] = useSearchParams();
   const currentSearch = searchParams.get('query');
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const Content = () => {
         console.log(results);
         setSearchResults(results);
       });
-  }, [searchParams]);
+  }, [currentSearch]);
 
   return (
     <ContentWrapper>

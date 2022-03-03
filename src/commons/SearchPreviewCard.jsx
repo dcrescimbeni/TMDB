@@ -51,16 +51,23 @@ const SearchPreviewCard = ({ mediaItem }) => {
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  margin: 20px 0px;
+  width: 100%;
+  margin: 0px;
+  padding-bottom: 20px;
+
+  @media (min-width: 630px) {
+    margin-bottom: 15px;
+  }
 `;
 const CardWrapper = styled.div`
-  min-width: 71px;
-  max-width: 71px;
-  margin: 0px 34px;
+  margin-right: 20px;
+
+  @media (min-width: 630px) {
+    min-width: 71px;
+  }
 `;
 
 const Card = styled.img`
-  width: 100%;
   border-radius: 10px;
 `;
 
@@ -70,6 +77,11 @@ const Title = styled.h5`
 
 const Description = styled.p`
   color: #4e4e4e;
+  display: none;
+
+  @media (min-width: 630px) {
+    display: contents;
+  }
 `;
 
 export default SearchPreviewCard;

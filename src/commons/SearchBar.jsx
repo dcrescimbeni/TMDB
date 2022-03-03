@@ -28,6 +28,7 @@ const SearchBar = ({ handleSubmit }) => {
       }, 150);
       setTimerId(timer);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focusSearchBar]);
 
   useEffect(() => {
@@ -65,6 +66,7 @@ const SearchBar = ({ handleSubmit }) => {
       if (selectedButton === 'users-btn') {
         return media;
       }
+      return null;
     });
 
     let topThreeResults = filterByType.slice(0, 3);
@@ -74,7 +76,7 @@ const SearchBar = ({ handleSubmit }) => {
   return (
     <Wrapper
       onFocus={() => setFocusSearchBar(true)}
-      onBlur={() => setFocusSearchBar(false)}
+      onBlur={() => setFocusSearchBar(true)} //TODO: Change
     >
       <form
         autoComplete="off"
@@ -110,8 +112,16 @@ const SearchBar = ({ handleSubmit }) => {
 };
 
 const Wrapper = styled.div`
-  margin-top: 40px;
   margin-bottom: 60px;
+  width: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: 630px) {
+    margin-top: 40px;
+  }
 `;
 
 const SearchBarWrapper = styled.div`
@@ -121,7 +131,6 @@ const SearchBarWrapper = styled.div`
 `;
 
 const SearchInput = styled.input`
-  width: 580px;
   height: 50px;
   border-radius: 30px;
   padding-left: 55px;
@@ -130,6 +139,10 @@ const SearchInput = styled.input`
 
   &:focus {
     outline: none;
+  }
+
+  @media (min-width: 600px) {
+    width: 580px;
   }
 `;
 

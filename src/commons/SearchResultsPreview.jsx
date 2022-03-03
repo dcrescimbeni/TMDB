@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 import { BiUser } from 'react-icons/bi';
@@ -65,7 +64,6 @@ const SearchResultsPreview = ({
           {searchPreview.map((item, index) => {
             if (!item) return null;
             if (item.originalUsername) {
-              console.log(item);
               return (
                 <Link to={`/users/user/${item.username}`} key={index}>
                   <UserCard>
@@ -75,7 +73,6 @@ const SearchResultsPreview = ({
                 </Link>
               );
             }
-            console.log(item);
             return (
               <Link
                 to={`/media/single/${item.id}?type=${item.media_type}`}
@@ -106,6 +103,10 @@ const Wrapper = styled.div`
   z-index: 1;
   display: flex;
   flex-direction: column;
+  margin-top: 25px;
+  width: 100%;
+  padding: 15px;
+  max-width: 580px;
 `;
 
 const Triangle = styled.div`
@@ -121,13 +122,15 @@ const Triangle = styled.div`
 const FilterButtonsWrapper = styled.div`
   display: flex;
   align-items: flex-start;
-  width: 100%;
-  margin-left: 65px;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
+  /* width: 100%; */
+  /* margin-left: 65px;
+  margin-bottom: 5px; */
 `;
 
 const FilterButton = styled.button`
-  padding: 10px 25px;
+  /* padding: 10px 25px; */
+  padding: 0px 15px;
   border: none;
   color: #9c1de7;
   background-color: #f6f6f6;
@@ -144,17 +147,18 @@ const FilterButton = styled.button`
 
 const SearchPreviewWrapper = styled.div`
   margin-bottom: 10px;
+  width: 100%;
 `;
 
 const ResultsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 580px;
+  /* width: 580px; */
   border-radius: 20px;
   background-color: #f6f6f6;
   padding: 30px;
-  margin-left: -17px;
+  /* margin-left: -17px; */
 `;
 
 const UserCard = styled.div`
@@ -165,5 +169,3 @@ const UserCard = styled.div`
   border-bottom: 2px solid #9c1de7;
   align-items: center;
 `;
-
-const Username = styled.h5``;

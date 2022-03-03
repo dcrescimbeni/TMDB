@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components/macro';
@@ -61,7 +60,8 @@ const GlobalWrapper = styled.div`
 `;
 
 const Slogan = styled.h1`
-  margin: 15px 0px;
+  margin: 15px 10px;
+  text-align: center;
 `;
 
 export default App;

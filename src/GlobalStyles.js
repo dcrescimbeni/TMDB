@@ -72,5 +72,8 @@ h4 {font-size: 1.563rem;}
 h5 {font-size: 1.25rem;}
 
 a {text-decoration: none}
+
+// For debugging
+/* * {border: 1px solid red} */
 `;
 export default GlobalStyles;

@@ -6,10 +6,11 @@ import { AiFillHeart } from 'react-icons/ai';
 
 import { AuthContext } from '../AuthContext';
 
-const FavoriteButton = ({ mediaId, type, mediaList, setMediaList }) => {
-  // console.log('fav button: ', mediaList);
+const FavoriteButton = ({ mediaId, type, size, mediaList, setMediaList }) => {
   const userDetails = useContext(AuthContext);
   const { username } = useParams();
+
+  if (!size) size = 1;
 
   const handleAddFavorite = (e) => {
     e.preventDefault();
@@ -42,13 +43,13 @@ const FavoriteButton = ({ mediaId, type, mediaList, setMediaList }) => {
   if (isOwnProfile)
     return (
       <Button onClick={handleDeleteFavorite}>
-        <AiFillHeart color={'#9C1DE7'} size={'2rem'} />
+        <AiFillHeart color={'#9C1DE7'} size={`${size * 2}rem`} />
       </Button>
     );
   else
     return (
       <Button onClick={handleAddFavorite}>
-        <AiFillHeart color={'#9C1DE7'} size={'2rem'} />
+        <AiFillHeart color={'#9C1DE7'} size={`${size * 2}rem`} />
       </Button>
     );
 };

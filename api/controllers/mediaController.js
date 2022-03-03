@@ -3,6 +3,8 @@ const axios = require('axios');
 exports.mediaSearchGet = (req, res, next) => {
   let { query, page } = req.query;
 
+  if (!query.length) throw new Error('Must provide a search query');
+
   if (!page) {
     page = 1;
   }

@@ -2,6 +2,9 @@ import { useContext, useState } from 'react';
 import styled from 'styled-components/macro';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { BiUser } from 'react-icons/bi';
+import { BiLogOutCircle } from 'react-icons/bi';
+import { AiFillHeart } from 'react-icons/ai';
 
 import MainButton from '../commons/MainButton';
 import SecondaryButton from '../commons/SecondaryButton';
@@ -11,10 +14,6 @@ const Header = () => {
   const userDetails = useContext(AuthContext);
   const navigate = useNavigate();
   const [isTooltipVisible, setIsTooltipVisible] = useState('hidden');
-
-  UserOptions.defaultProps = {
-    isTooltipVisible,
-  };
 
   const signupClickHandle = () => {
     navigate('/signup');
@@ -44,14 +43,29 @@ const Header = () => {
   return (
     <HeaderWrapper>
       <div>
-        <Link to="/">MUUBI</Link>
+        <Link to="/">
+          <Logo>FLIM!</Logo>
+        </Link>
       </div>
       {userDetails.user ? (
         <div>
-          <button onClick={showUserOptions}>{userDetails.user}</button>
-          <UserOptions>
-            <button onClick={favoritesClickHandle}>Favorites</button>
-            <button onClick={logoutClickHandle}>Logout</button>
+          <ProfileButtonWrapper>
+            <BiUser size={'1.5rem'} color={'#9c1de7'} />
+            <ProfileButton onClick={showUserOptions}>
+              {userDetails.user}▼
+            </ProfileButton>
+          </ProfileButtonWrapper>
+          <UserOptions visible={isTooltipVisible}>
+            <UserOptionsButtonWrapper>
+              <AiFillHeart size={'1.25rem'} />
+              <OptionButtons onClick={favoritesClickHandle}>
+                Favorites
+              </OptionButtons>
+            </UserOptionsButtonWrapper>
+            <UserOptionsButtonWrapper>
+              <BiLogOutCircle size={'1.25rem'} />
+              <OptionButtons onClick={logoutClickHandle}>Logout</OptionButtons>
+            </UserOptionsButtonWrapper>
           </UserOptions>
         </div>
       ) : (
@@ -69,11 +83,66 @@ const HeaderWrapper = styled.header`
   width: 100%;
   justify-content: space-between;
   padding: 12px 24px;
+  align-items: center;
 `;
 
 const UserOptions = styled.div`
-  visibility: ${(props) => props.isTooltipVisible};
-  /* visibility: ${(props) => props.isTooltipVisible}; */
+  visibility: ${(props) => props.visible};
+  position: absolute;
+  background-color: #f6f6f6;
+  padding: 15px;
+  margin: 10px;
+  border-radius: 10px;
+`;
+
+const Logo = styled.p`
+  font-weight: bold;
+`;
+
+const ProfileButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const ProfileButton = styled.button`
+  color: #9c1de7;
+  border-radius: 5px;
+  border: none;
+  margin-left: 5px;
+  padding: 5px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const UserOptionsButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+
+  &:hover {
+    color: #581b98;
+    background-color: #e3e3e3;
+  }
+
+  &:first-child {
+    border-bottom: 3px solid #e3e3e3;
+  }
+`;
+
+const OptionButtons = styled.button`
+  background-color: #f6f6f6;
+  border: none;
+  color: inherit;
+  padding: 10px 5px;
+  text-align: left;
+  width: 100%;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #e3e3e3;
+  }
 `;
 
 export default Header;

@@ -3,10 +3,12 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components/macro';
 
+import ScoreAverage from '../commons/ScoreAverage';
+
 const MediaDetails = () => {
   const [mediaDetails, setMediaDetails] = useState({});
   const { id } = useParams();
-  let [searchParams, setSearchParams] = useSearchParams();
+  let [searchParams] = useSearchParams();
 
   let scoreAverage =
     mediaDetails.vote_average > 0
@@ -40,11 +42,7 @@ const MediaDetails = () => {
           <h3>{mediaDetails.original_title || mediaDetails.name}</h3>
           <p>{mediaDetails.overview}</p>
         </div>
-        {scoreAverage ? (
-          <ScoreWrapper>
-            <Score>{scoreAverage}</Score>
-          </ScoreWrapper>
-        ) : null}
+        {scoreAverage ? <ScoreAverage score={scoreAverage} size={2} /> : null}
       </DetailsWrapper>
     </div>
   );
@@ -75,23 +73,6 @@ const DetailsWrapper = styled.div`
   width: 100%;
   max-width: 1080px;
   justify-content: space-between;
-`;
-
-const ScoreWrapper = styled.div`
-  min-width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background-color: #581b98;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 10px;
-`;
-
-const Score = styled.p`
-  color: #e3e3e3;
-  font-weight: bold;
-  font-size: 35px;
 `;
 
 export default MediaDetails;

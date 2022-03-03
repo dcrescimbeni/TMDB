@@ -1,10 +1,10 @@
-import axios from 'axios';
 import { useContext } from 'react';
 import styled from 'styled-components/macro';
 
 import noPosterAvailable from '../assets/noPosterAvailable.jpg';
 import { AuthContext } from '../AuthContext';
 import FavoriteButton from './FavoriteButton';
+import ScoreAverage from './ScoreAverage';
 
 const MediaCard = ({ mediaDetails, mediaList, setMediaList }) => {
   let scoreAverage =
@@ -17,12 +17,12 @@ const MediaCard = ({ mediaDetails, mediaList, setMediaList }) => {
   return (
     <Wrapper>
       {mediaDetails.poster_path ? (
-        <Card
+        <Poster
           src={`http://image.tmdb.org/t/p/w342${mediaDetails.poster_path}`}
           alt={`${mediaDetails.original_title || mediaDetails.name} poster`}
         />
       ) : (
-        <Card
+        <Poster
           src={noPosterAvailable}
           alt={`${
             mediaDetails.original_title || mediaDetails.name
@@ -43,11 +43,7 @@ const MediaCard = ({ mediaDetails, mediaList, setMediaList }) => {
           <MovieTitle>
             {mediaDetails.original_title || mediaDetails.name}
           </MovieTitle>
-          {scoreAverage ? (
-            <ScoreWrapper>
-              <Score>{scoreAverage}</Score>
-            </ScoreWrapper>
-          ) : null}
+          {scoreAverage ? <ScoreAverage score={scoreAverage} /> : null}
         </MovieTitleWrapper>
       </ShadowOverlayWrapper>
     </Wrapper>
@@ -56,7 +52,7 @@ const MediaCard = ({ mediaDetails, mediaList, setMediaList }) => {
 
 const Wrapper = styled.div``;
 
-const Card = styled.img`
+const Poster = styled.img`
   width: 214px;
   border-radius: 15px;
 `;
@@ -86,22 +82,6 @@ const MovieTitle = styled.p`
   font-weight: bold;
   color: #e3e3e3;
   opacity: 100%;
-`;
-
-const ScoreWrapper = styled.div`
-  min-width: 37px;
-  height: 37px;
-  border-radius: 50%;
-  background-color: #581b98;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 10px;
-`;
-
-const Score = styled.p`
-  color: #e3e3e3;
-  font-weight: bold;
 `;
 
 export default MediaCard;

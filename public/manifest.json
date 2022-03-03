@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Flim",
+  "name": "Flim - find movies and TV shows",
   "icons": [
     {
       "src": "favicon.ico",

@@ -54,9 +54,7 @@ const MediaCard = ({ mediaDetails, mediaList, setMediaList }) => {
   );
 };
 
-const Wrapper = styled.div`
-  margin-bottom: 57px;
-`;
+const Wrapper = styled.div``;
 
 const Card = styled.img`
   width: 214px;

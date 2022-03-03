@@ -27,10 +27,11 @@ const MediaGrid = ({ mediaList, setMediaList, currentSearch }) => {
 };
 
 const GridWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  max-width: 762px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 45px;
+
+  /* max-width: 762px; */
   margin-top: 30px;
 `;
 

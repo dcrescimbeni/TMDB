@@ -5,6 +5,8 @@ import styled from 'styled-components/macro';
 
 import ScoreAverage from '../commons/ScoreAverage';
 import FavoriteButton from '../commons/FavoriteButton';
+import noPosterAvailable from '../assets/noPosterAvailable.jpg';
+import noBackdropAvailable from '../assets/noBackdropAvailable.jpg';
 
 const MediaDetails = () => {
   const [mediaDetails, setMediaDetails] = useState({});
@@ -30,10 +32,20 @@ const MediaDetails = () => {
   return (
     <Wrapper>
       <BackdropImageWrapper>
-        <BackdropImage
-          src={`http://image.tmdb.org/t/p/w1280${mediaDetails.backdrop_path}`}
-          alt={`${mediaDetails.original_title || mediaDetails.name} backdrop`}
-        />
+        {mediaDetails.backdrop_path ? (
+          <BackdropImage
+            src={`http://image.tmdb.org/t/p/w1280${mediaDetails.backdrop_path}`}
+            alt={`${mediaDetails.original_title || mediaDetails.name} backdrop`}
+          />
+        ) : (
+          <BackdropImage
+            src={noBackdropAvailable}
+            alt={`${
+              mediaDetails.original_title || mediaDetails.name
+            } backdrop not available`}
+          />
+        )}
+
         <Shadow></Shadow>
         <FavoriteButtonWrapper>
           <FavoriteButton mediaId={mediaDetails.id} type={mediaType} size={2} />
@@ -41,10 +53,20 @@ const MediaDetails = () => {
       </BackdropImageWrapper>
 
       <DetailsWrapper>
-        <PosterImage
-          src={`http://image.tmdb.org/t/p/w342${mediaDetails.poster_path}`}
-          alt={`${mediaDetails.original_title || mediaDetails.name} poster`}
-        />
+        {mediaDetails.poster_path ? (
+          <PosterImage
+            src={`http://image.tmdb.org/t/p/w342${mediaDetails.poster_path}`}
+            alt={`${mediaDetails.original_title || mediaDetails.name} poster`}
+          />
+        ) : (
+          <PosterImage
+            src={noPosterAvailable}
+            alt={`${
+              mediaDetails.original_title || mediaDetails.name
+            } poster not available`}
+          />
+        )}
+
         <MediaTitle>
           {mediaDetails.original_title || mediaDetails.name}
         </MediaTitle>

@@ -10,6 +10,7 @@ const MediaDetails = () => {
   const [mediaDetails, setMediaDetails] = useState({});
   const { id } = useParams();
   let [searchParams] = useSearchParams();
+  let mediaType = searchParams.get('type');
 
   let scoreAverage =
     mediaDetails.vote_average > 0
@@ -18,13 +19,13 @@ const MediaDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`/api/media/single/${id}?type=${searchParams.get('type')}`)
+      .get(`/api/media/single/${id}?type=${mediaType}`)
       .then((res) => res.data)
       .then((media) => {
         console.log(media);
         setMediaDetails(media);
       });
-  }, [id, searchParams]);
+  }, [id, mediaType]);
 
   return (
     <Wrapper>
@@ -35,11 +36,7 @@ const MediaDetails = () => {
         />
         <Shadow></Shadow>
         <FavoriteButtonWrapper>
-          <FavoriteButton
-            mediaId={mediaDetails.id}
-            type={mediaDetails.type}
-            size={2}
-          />
+          <FavoriteButton mediaId={mediaDetails.id} type={mediaType} size={2} />
         </FavoriteButtonWrapper>
       </BackdropImageWrapper>
 

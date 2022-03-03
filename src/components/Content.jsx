@@ -22,9 +22,9 @@ const Content = () => {
 
   return (
     <ContentWrapper>
-      <h3>
+      <Title>
         Search results for <AccentSpan>{currentSearch}</AccentSpan>
-      </h3>
+      </Title>
 
       <MediaGrid mediaList={searchResults} currentSearch={currentSearch} />
     </ContentWrapper>
@@ -37,6 +37,10 @@ const ContentWrapper = styled.div`
 
 const AccentSpan = styled.span`
   color: #9c1de7;
+`;
+
+const Title = styled.h3`
+  margin-left: 10px;
 `;
 
 export default Content;

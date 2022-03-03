@@ -92,7 +92,7 @@ const UserOptions = styled.div`
   background-color: #f6f6f6;
   padding: 15px;
   margin: 10px;
-  margin-left: -10px;
+  /* margin-left: -10px; */
   border-radius: 10px;
 `;
 

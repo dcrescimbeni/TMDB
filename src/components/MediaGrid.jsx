@@ -28,11 +28,17 @@ const MediaGrid = ({ mediaList, setMediaList, currentSearch }) => {
 
 const GridWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 45px;
-
-  /* max-width: 762px; */
+  grid-template-columns: 1fr;
   margin-top: 30px;
+
+  @media (min-width: 525px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+  }
+
+  @media (min-width: 800px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 `;
 
 export default MediaGrid;

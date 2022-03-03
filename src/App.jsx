@@ -29,9 +29,9 @@ const App = () => {
           <Route
             path={'/'}
             element={
-              <h1>
+              <Slogan>
                 Find <WordAccent>any</WordAccent> movie or TV show
-              </h1>
+              </Slogan>
             }
           />
         </Routes>
@@ -57,6 +57,10 @@ const GlobalWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const Slogan = styled.h1`
+  margin-bottom: 54px;
 `;
 
 export default App;

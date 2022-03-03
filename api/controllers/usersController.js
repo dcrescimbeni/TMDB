@@ -32,15 +32,6 @@ exports.usersSearch = (req, res, next) => {
     where: { username: { [Op.like]: `%${userSearch}%` } },
     attributes: { exclude: ['password', 'email', 'createdAt', 'updatedAt'] },
   }).then((result) => {
-    // let filteredResult = result.map((item) => {
-    //   let user = {
-    //     username: result.username,
-    //     originalUsername: result.originalUsername,
-    //   };
-    //   return user;
-    // });
-    console.log(result[0]);
-
     res.send(result);
   });
 };

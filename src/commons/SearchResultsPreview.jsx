@@ -67,7 +67,7 @@ const SearchResultsPreview = ({
             if (item.originalUsername) {
               console.log(item);
               return (
-                <Link to={`/users/user/${item.username}`}>
+                <Link to={`/users/user/${item.username}`} key={index}>
                   <UserCard>
                     <BiUser size={'2rem'} />
                     <h5>{item.originalUsername}</h5>

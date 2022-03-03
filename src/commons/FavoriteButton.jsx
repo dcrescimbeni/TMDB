@@ -1,7 +1,8 @@
 import { useContext } from 'react';
+import styled from 'styled-components/macro';
 import axios from 'axios';
-
 import { useParams } from 'react-router-dom';
+import { AiFillHeart } from 'react-icons/ai';
 
 import { AuthContext } from '../AuthContext';
 
@@ -39,8 +40,28 @@ const FavoriteButton = ({ mediaId, type, mediaList, setMediaList }) => {
   const isOwnProfile = userDetails.user === username ? true : false;
 
   if (isOwnProfile)
-    return <button onClick={handleDeleteFavorite}>Delete</button>;
-  else return <button onClick={handleAddFavorite}>Fav</button>;
+    return (
+      <Button onClick={handleDeleteFavorite}>
+        <AiFillHeart color={'#9C1DE7'} size={'2rem'} />
+      </Button>
+    );
+  else
+    return (
+      <Button onClick={handleAddFavorite}>
+        <AiFillHeart color={'#9C1DE7'} size={'2rem'} />
+      </Button>
+    );
 };
+
+const Button = styled.button`
+  padding: 0px;
+  margin: 0px;
+  background-color: transparent;
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 export default FavoriteButton;

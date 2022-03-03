@@ -29,8 +29,7 @@ const MediaCard = ({ mediaDetails, mediaList, setMediaList }) => {
           } poster not available`}
         />
       )}
-
-      <ShadowOverlayWrapper>
+      <FavButtonWrapper>
         {userDetails.user ? (
           <FavoriteButton
             mediaId={mediaDetails.id}
@@ -39,6 +38,9 @@ const MediaCard = ({ mediaDetails, mediaList, setMediaList }) => {
             setMediaList={setMediaList}
           />
         ) : null}
+      </FavButtonWrapper>
+
+      <ShadowOverlayWrapper>
         <MovieTitleWrapper>
           <MovieTitle>
             {mediaDetails.original_title || mediaDetails.name}
@@ -50,7 +52,9 @@ const MediaCard = ({ mediaDetails, mediaList, setMediaList }) => {
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  position: relative;
+`;
 
 const Poster = styled.img`
   width: 214px;
@@ -82,6 +86,12 @@ const MovieTitle = styled.p`
   font-weight: bold;
   color: #e3e3e3;
   opacity: 100%;
+`;
+
+const FavButtonWrapper = styled.div`
+  position: absolute;
+  top: 12px;
+  right: 12px;
 `;
 
 export default MediaCard;

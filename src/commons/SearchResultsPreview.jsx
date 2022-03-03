@@ -65,6 +65,7 @@ const SearchResultsPreview = ({
           {searchPreview.map((item, index) => {
             if (!item) return null;
             if (item.originalUsername) {
+              console.log(item);
               return (
                 <Link to={`/users/user/${item.username}`}>
                   <UserCard>

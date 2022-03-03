@@ -26,13 +26,23 @@ exports.usersCheckIfUserExists = (req, res, next) => {
 };
 
 exports.usersSearch = (req, res, next) => {
-  const userSearch = req.query.query;
+  const userSearch = req.query.query.toLowerCase();
   console.log(userSearch);
-  User.findAll({ where: { username: { [Op.like]: `%${userSearch}%` } } }).then(
-    (result) => {
-      res.send(result);
-    }
-  );
+  User.findAll({
+    where: { username: { [Op.like]: `%${userSearch}%` } },
+    attributes: { exclude: ['password', 'email', 'createdAt', 'updatedAt'] },
+  }).then((result) => {
+    // let filteredResult = result.map((item) => {
+    //   let user = {
+    //     username: result.username,
+    //     originalUsername: result.originalUsername,
+    //   };
+    //   return user;
+    // });
+    console.log(result[0]);
+
+    res.send(result);
+  });
 };
 
 exports.usersLogin = (req, res, next) => {

@@ -14,7 +14,7 @@ const SearchBar = ({ handleSubmit }) => {
   const [focusSearchBar, setFocusSearchBar] = useState(false);
   const [timerId, setTimerId] = useState(0);
   const [selectedButton, setSelectedButton] = useState('all-btn');
-  const [isSearchingUsers, setIsSearchingUsers] = useState(true);
+  const [isSearchingUsers, setIsSearchingUsers] = useState(false);
 
   useEffect(() => {
     if (focusSearchBar === true) {
@@ -74,7 +74,7 @@ const SearchBar = ({ handleSubmit }) => {
   return (
     <div
       onFocus={() => setFocusSearchBar(true)}
-      onBlur={() => setFocusSearchBar(true)}
+      onBlur={() => setFocusSearchBar(false)}
     >
       <form
         autoComplete="off"

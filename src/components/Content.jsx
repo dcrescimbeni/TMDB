@@ -7,12 +7,12 @@ import MediaGrid from './MediaGrid';
 
 const Content = () => {
   const [searchResults, setSearchResults] = useState([]);
-
   let [searchParams, setSearchParams] = useSearchParams();
+  const currentSearch = searchParams.get('query');
 
   useEffect(() => {
     axios
-      .get(`/api/media/search?query=${searchParams.get('query')}`)
+      .get(`/api/media/search?query=${currentSearch}`)
       .then((res) => res.data)
       .then((results) => {
         console.log(results);
@@ -22,13 +22,21 @@ const Content = () => {
 
   return (
     <ContentWrapper>
-      <MediaGrid mediaList={searchResults} />
+      <h3>
+        Search results for <AccentSpan>{currentSearch}</AccentSpan>
+      </h3>
+
+      <MediaGrid mediaList={searchResults} currentSearch={currentSearch} />
     </ContentWrapper>
   );
 };
 
 const ContentWrapper = styled.div`
   max-width: 1440px;
+`;
+
+const AccentSpan = styled.span`
+  color: #9c1de7;
 `;
 
 export default Content;

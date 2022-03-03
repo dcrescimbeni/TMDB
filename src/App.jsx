@@ -37,6 +37,7 @@ const App = () => {
         </Routes>
 
         <SearchBar handleSubmit={handleSubmit} />
+
         <Routes>
           <Route path="/media/search" element={<Content />} />
           <Route path="/media/single/:id" element={<MediaDetails />} />
@@ -60,7 +61,7 @@ const GlobalWrapper = styled.div`
 `;
 
 const Slogan = styled.h1`
-  margin-bottom: 54px;
+  margin: 15px 0px;
 `;
 
 export default App;

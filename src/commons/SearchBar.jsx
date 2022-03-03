@@ -72,7 +72,7 @@ const SearchBar = ({ handleSubmit }) => {
   }, [fullSearchResults, selectedButton]);
 
   return (
-    <div
+    <Wrapper
       onFocus={() => setFocusSearchBar(true)}
       onBlur={() => setFocusSearchBar(false)}
     >
@@ -80,6 +80,7 @@ const SearchBar = ({ handleSubmit }) => {
         autoComplete="off"
         onSubmit={(event) => {
           handleSubmit(event, searchQuery.value);
+          setFocusSearchBar(false);
         }}
       >
         <SearchBarWrapper>
@@ -104,9 +105,14 @@ const SearchBar = ({ handleSubmit }) => {
           setIsSearchingUsers={setIsSearchingUsers}
         />
       ) : null}
-    </div>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  margin-top: 40px;
+  margin-bottom: 60px;
+`;
 
 const SearchBarWrapper = styled.div`
   display: flex;

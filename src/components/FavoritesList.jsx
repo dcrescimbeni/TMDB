@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import styled from 'styled-components/macro';
+import { useContext } from 'react';
 
 import MediaGrid from './MediaGrid';
+import { AuthContext } from '../AuthContext';
 
-const FavoritesList = () => {
+const FavoritesList = ({ currentSearch }) => {
   const { username } = useParams();
   const [userFavorites, setUserFavorites] = useState([]);
+  const userDetails = useContext(AuthContext);
 
   useEffect(() => {
     axios
@@ -22,10 +26,19 @@ const FavoritesList = () => {
 
   return (
     <div>
-      User favorites {username}
+      <h3>
+        <AccentSpan>
+          {userDetails.user === username ? 'Your' : `${username}'s`}
+        </AccentSpan>{' '}
+        favorites
+      </h3>
       <MediaGrid mediaList={userFavorites} setMediaList={setUserFavorites} />
     </div>
   );
 };
+
+const AccentSpan = styled.span`
+  color: #9c1de7;
+`;
 
 export default FavoritesList;

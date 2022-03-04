@@ -80,16 +80,16 @@ const Login = () => {
 
   return (
     <MainWrapper>
-      <h3>Log in</h3>
+      <Title>Log in</Title>
       <form onSubmit={handleSubmit}>
         <FormFieldsWrapper>
-          <label htmlFor="username">Username</label>
+          <Label htmlFor="username">Username</Label>
           <InputField placeholder="Username" {...username} />
           {loginErrors.username.map((item, index) => {
             return <ErrorMessage key={index}>{item}</ErrorMessage>;
           })}
           <br />
-          <label htmlFor="password">Password</label>
+          <Label htmlFor="password">Password</Label>
           <InputField placeholder="Password" type="password" {...password} />
           {loginErrors.password.map((item, index) => {
             return <ErrorMessage key={index}>{item}</ErrorMessage>;
@@ -98,10 +98,10 @@ const Login = () => {
           {loginErrors.general.map((item, index) => {
             return <ErrorMessage key={index}>{item}</ErrorMessage>;
           })}
-          <div>
+          <ButtonsWrapper>
             <MainButton onClick={handleSubmit}>Log in</MainButton>
             <SecondaryButton>Sign up</SecondaryButton>
-          </div>
+          </ButtonsWrapper>
         </FormFieldsWrapper>
       </form>
     </MainWrapper>
@@ -111,15 +111,40 @@ const Login = () => {
 const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 450px;
-  border-radius: 10px;
+  align-items: center;
   background-color: #f6f6f6;
-  padding: 50px;
+  width: 100%;
+  padding-bottom: 40px;
+
+  @media (min-width: 450px) {
+    max-width: 450px;
+    padding: 50px;
+    border-radius: 10px;
+  }
+`;
+
+const Title = styled.h3`
+  color: #9c1de7;
+  margin: 20px 0px;
+
+  @media (min-width: 450px) {
+    margin-top: 0px;
+  }
 `;
 
 const FormFieldsWrapper = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const ButtonsWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Label = styled.label`
+  color: #581b98;
+  font-weight: bold;
 `;
 
 const ErrorMessage = styled.p`

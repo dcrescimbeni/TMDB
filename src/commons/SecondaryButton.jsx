@@ -17,7 +17,7 @@ const Button = styled.button`
   background-color: #f7f7f7;
   border: 1px solid #9c1de7;
   padding: 0px 35px;
-  margin: 0px 20px;
+  margin: 0px 10px;
 `;
 
 export default SecondaryButton;

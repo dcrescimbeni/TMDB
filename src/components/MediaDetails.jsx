@@ -168,7 +168,6 @@ const PosterImage = styled.img`
     width: 235px;
     border-radius: 15px;
     margin: 0px 40px;
-    margin-top: -50px;
   }
 `;
 
@@ -178,12 +177,17 @@ const DetailsWrapper = styled.div`
   width: 100%;
   max-width: 1080px;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
   padding: 20px;
   top: 300px;
+  /*  */
+  max-height: 180px;
+  overflow: hidden;
 
   @media (min-width: 800px) {
-    top: 210px;
+    align-items: center;
+    max-height: 100%;
+    top: 90px;
     padding: 0px;
     padding-right: 20px;
   }
@@ -191,6 +195,7 @@ const DetailsWrapper = styled.div`
 
 const MediaTitle = styled.h3`
   color: #581b98;
+  overflow: hidden;
 
   @media (min-width: 800px) {
     margin-right: auto;

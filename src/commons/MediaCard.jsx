@@ -1,8 +1,6 @@
-import { useContext } from 'react';
 import styled from 'styled-components/macro';
 
 import noPosterAvailable from '../assets/noPosterAvailable.jpg';
-import { AuthContext } from '../AuthContext';
 import FavoriteButton from './FavoriteButton';
 import ScoreAverage from './ScoreAverage';
 
@@ -11,8 +9,6 @@ const MediaCard = ({ mediaDetails, mediaList, setMediaList }) => {
     mediaDetails.vote_average > 0
       ? Math.round(mediaDetails.vote_average)
       : null;
-
-  const userDetails = useContext(AuthContext);
 
   return (
     <Wrapper>

@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
 import { AiFillHeart } from 'react-icons/ai';
 import { AiOutlineHeart } from 'react-icons/ai';
 
@@ -9,7 +8,6 @@ import { AuthContext } from '../AuthContext';
 
 const FavoriteButton = ({ mediaId, type, size, mediaList, setMediaList }) => {
   const userDetails = useContext(AuthContext);
-  const { username } = useParams();
   const [isFavorited, setIsFavorited] = useState(false);
 
   let { user } = userDetails;

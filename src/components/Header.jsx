@@ -6,8 +6,6 @@ import { BiUser } from 'react-icons/bi';
 import { BiLogOutCircle } from 'react-icons/bi';
 import { AiFillHeart } from 'react-icons/ai';
 
-import MainButton from '../commons/MainButton';
-import SecondaryButton from '../commons/SecondaryButton';
 import { AuthContext } from '../AuthContext';
 
 const Header = () => {
@@ -92,6 +90,7 @@ const UserOptions = styled.div`
   background-color: #f6f6f6;
   padding: 15px;
   margin: 10px;
+  margin-left: -10px;
   border-radius: 10px;
 `;
 

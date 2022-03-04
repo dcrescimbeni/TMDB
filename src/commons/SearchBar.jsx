@@ -112,14 +112,14 @@ const SearchBar = ({ handleSubmit }) => {
 };
 
 const Wrapper = styled.div`
-  margin-bottom: 60px;
   width: 100%;
   padding: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  @media (min-width: 630px) {
+  @media (min-width: 600px) {
+    margin-bottom: 60px;
     margin-top: 40px;
   }
 `;

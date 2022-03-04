@@ -74,6 +74,13 @@ const MediaDetails = () => {
       </DetailsWrapper>
 
       <OverviewWrapper>
+        <GenresWrapper>
+          {mediaDetails.genres
+            ? mediaDetails.genres.map((item) => (
+                <GenrePill>{item.name}</GenrePill>
+              ))
+            : null}
+        </GenresWrapper>
         <Overview>{mediaDetails.overview}</Overview>
       </OverviewWrapper>
     </Wrapper>
@@ -87,32 +94,64 @@ const Wrapper = styled.div`
 
 const BackdropImageWrapper = styled.div`
   max-width: 1080px;
-  height: 325px;
+  height: 450px;
   overflow: hidden;
   display: flex;
   align-items: center;
-  border-radius: 20px;
   position: relative;
+
+  @media (min-width: 800px) {
+    height: 325px;
+    border-radius: 20px;
+  }
 `;
 
 const BackdropImage = styled.img`
   position: relative;
   z-index: -2;
-  width: 100%;
+  /*  */
+  object-fit: cover;
+  height: 99%;
+
+  @media (min-width: 800px) {
+    width: 100%;
+  }
 `;
 
 const Shadow = styled.div`
   width: 100%;
-  height: 122px;
+  height: 200px;
   position: absolute;
   bottom: 0;
-
   z-index: -1;
   background: linear-gradient(
-    180deg,
-    rgba(24, 24, 24, 0) 0%,
-    rgba(24, 24, 24, 0.56) 31.25%
+    to top,
+    hsl(0, 0%, 100%) 0%,
+    hsla(0, 0%, 100%, 0.987) 8.1%,
+    hsla(0, 0%, 100%, 0.951) 15.5%,
+    hsla(0, 0%, 100%, 0.896) 22.5%,
+    hsla(0, 0%, 100%, 0.825) 29%,
+    hsla(0, 0%, 100%, 0.741) 35.3%,
+    hsla(0, 0%, 100%, 0.648) 41.2%,
+    hsla(0, 0%, 100%, 0.55) 47.1%,
+    hsla(0, 0%, 100%, 0.45) 52.9%,
+    hsla(0, 0%, 100%, 0.352) 58.8%,
+    hsla(0, 0%, 100%, 0.259) 64.7%,
+    hsla(0, 0%, 100%, 0.175) 71%,
+    hsla(0, 0%, 100%, 0.104) 77.5%,
+    hsla(0, 0%, 100%, 0.049) 84.5%,
+    hsla(0, 0%, 100%, 0.013) 91.9%,
+    hsla(0, 0%, 100%, 0) 100%
   );
+
+  @media (min-width: 800px) {
+    height: 122px;
+    background: linear-gradient(
+      180deg,
+      rgba(24, 24, 24, 0) 0%,
+      rgba(24, 24, 24, 0.56) 31.25%
+    );
+  }
 `;
 
 const FavoriteButtonWrapper = styled.div`
@@ -122,10 +161,15 @@ const FavoriteButtonWrapper = styled.div`
 `;
 
 const PosterImage = styled.img`
-  width: 235px;
-  border-radius: 15px;
-  margin: 0px 40px;
-  margin-top: -50px;
+  display: none;
+
+  @media (min-width: 800px) {
+    display: block;
+    width: 235px;
+    border-radius: 15px;
+    margin: 0px 40px;
+    margin-top: -50px;
+  }
 `;
 
 const DetailsWrapper = styled.div`
@@ -133,26 +177,52 @@ const DetailsWrapper = styled.div`
   display: flex;
   width: 100%;
   max-width: 1080px;
-  top: 210px;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   padding: 20px;
+  top: 300px;
+
+  @media (min-width: 800px) {
+    top: 210px;
+    padding: 0px;
+    padding-right: 20px;
+  }
 `;
 
 const MediaTitle = styled.h3`
-  margin-right: auto;
-  padding-right: 30px;
-  color: white;
+  color: #581b98;
+
+  @media (min-width: 800px) {
+    margin-right: auto;
+    padding-right: 30px;
+    color: white;
+  }
 `;
 
 const OverviewWrapper = styled.div`
-  padding-left: 334px;
-  padding-right: 140px;
-  padding-top: 23px;
+  padding: 25px;
+  @media (min-width: 800px) {
+    padding-left: 334px;
+    padding-right: 140px;
+    padding-top: 23px;
+  }
 `;
 
 const Overview = styled.p`
   line-height: 1.85;
+`;
+
+const GenresWrapper = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+`;
+
+const GenrePill = styled.p`
+  border-radius: 10px;
+  background: #d4b4e8;
+  color: #9c1de7;
+  padding: 5px 15px;
 `;
 
 export default MediaDetails;

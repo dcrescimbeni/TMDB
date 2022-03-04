@@ -106,7 +106,8 @@ exports.usersFavCheck = (req, res, next) => {
         }
       });
       res.send(favoriteExist);
-    });
+    })
+    .catch((err) => next(err));
 };
 
 exports.usersFavPost = (req, res, next) => {

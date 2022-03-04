@@ -30,14 +30,12 @@ const MediaCard = ({ mediaDetails, mediaList, setMediaList }) => {
         />
       )}
       <FavButtonWrapper>
-        {userDetails.user ? (
-          <FavoriteButton
-            mediaId={mediaDetails.id}
-            type={mediaDetails.media_type}
-            mediaList={mediaList}
-            setMediaList={setMediaList}
-          />
-        ) : null}
+        <FavoriteButton
+          mediaId={mediaDetails.id}
+          type={mediaDetails.media_type}
+          mediaList={mediaList}
+          setMediaList={setMediaList}
+        />
       </FavButtonWrapper>
 
       <ShadowOverlayWrapper>

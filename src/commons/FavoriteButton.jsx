@@ -1,57 +1,78 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { AiFillHeart } from 'react-icons/ai';
+import { AiOutlineHeart } from 'react-icons/ai';
 
 import { AuthContext } from '../AuthContext';
 
 const FavoriteButton = ({ mediaId, type, size, mediaList, setMediaList }) => {
   const userDetails = useContext(AuthContext);
   const { username } = useParams();
+  const [isFavorited, setIsFavorited] = useState(false);
+
+  let { user } = userDetails;
 
   if (!size) size = 1;
+
+  useEffect(() => {
+    if (user) {
+      axios
+        .get(
+          `/api/users/user/${user}/fav/check?mediaId=${mediaId}&type=${type}`
+        )
+        .then((res) => res.data)
+        .then((isInFavorites) => {
+          if (isInFavorites) setIsFavorited(true);
+        });
+    }
+  }, [mediaId, type, user]);
 
   const handleAddFavorite = (e) => {
     e.preventDefault();
 
     axios
-      .post(`/api/users/user/${userDetails.user}/fav`, {
+      .post(`/api/users/user/${user}/fav`, {
         mediaId,
         type,
       })
-      .then((res) => console.log(res));
+      .then((res) => setIsFavorited(true));
   };
 
   const handleDeleteFavorite = (e) => {
     e.preventDefault();
 
     axios
-      .delete(
-        `/api/users/user/${userDetails.user}/fav?mediaId=${mediaId}&type=${type}`
-      )
+      .delete(`/api/users/user/${user}/fav?mediaId=${mediaId}&type=${type}`)
       .then((res) => {
-        const newList = mediaList.filter((item) => {
-          return item.id !== mediaId && item.media_type;
-        });
-        setMediaList(newList);
+        if (mediaList) {
+          const newList = mediaList.filter((item) => {
+            return item.id !== mediaId && item.media_type;
+          });
+          setMediaList(newList);
+        }
+        setIsFavorited(false);
       });
   };
 
-  const isOwnProfile = userDetails.user === username ? true : false;
+  if (!user) {
+    return null;
+  }
 
-  if (isOwnProfile)
+  if (isFavorited) {
     return (
       <Button onClick={handleDeleteFavorite}>
         <AiFillHeart color={'#9C1DE7'} size={`${size * 2}rem`} />
       </Button>
     );
-  else
+  } else {
     return (
       <Button onClick={handleAddFavorite}>
-        <AiFillHeart color={'#9C1DE7'} size={`${size * 2}rem`} />
+        <AiOutlineHeart color={'#9C1DE7'} size={`${size * 2}rem`} />
       </Button>
     );
+  }
 };
 
 const Button = styled.button`

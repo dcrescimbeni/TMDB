@@ -19,6 +19,7 @@ const MediaDetails = () => {
       ? Math.round(mediaDetails.vote_average)
       : null;
 
+  // Get media details
   useEffect(() => {
     axios
       .get(`/api/media/single/${id}?type=${mediaType}`)
@@ -76,8 +77,8 @@ const MediaDetails = () => {
       <OverviewWrapper>
         <GenresWrapper>
           {mediaDetails.genres
-            ? mediaDetails.genres.map((item) => (
-                <GenrePill>{item.name}</GenrePill>
+            ? mediaDetails.genres.map((item, index) => (
+                <GenrePill key={index}>{item.name}</GenrePill>
               ))
             : null}
         </GenresWrapper>

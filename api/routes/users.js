@@ -11,6 +11,7 @@ usersRouter.get('/exist', usersController.usersCheckIfUserExists);
 // Favorites routes
 
 usersRouter.get('/user/:username/fav', usersController.usersFavList);
+usersRouter.get('/user/:username/fav/check', usersController.usersFavCheck);
 
 usersRouter.post(
   '/user/:username/fav',

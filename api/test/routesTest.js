@@ -429,6 +429,46 @@ describe('Favorites', () => {
     });
   });
 
+  describe('Check for one favorite existence', () => {
+    before('Create a new favorite', () => {
+      return agent
+        .post('/api/users/user/favoritetesting/fav')
+        .set('Cookie', session)
+        .send({
+          mediaId: 123456,
+          type: 'movie',
+        });
+    });
+
+    after('Delete favorite', () => {
+      return agent
+        .delete('/api/users/user/favoritetesting/fav?mediaId=123456&type=movie')
+        .set('Cookie', session);
+    });
+
+    it('Should return true for an existing favorite', () => {
+      return agent
+        .get(
+          `/api/users/user/favoritetesting/fav/check?mediaId=123456&type=movie`
+        )
+        .set('Cookie', session)
+        .then((res) => {
+          expect(res.body).to.equals(true);
+        });
+    });
+
+    it('Should return false for an unexisting favorite', () => {
+      return agent
+        .get(
+          `/api/users/user/favoritetesting/fav/check?mediaId=456784&type=movie`
+        )
+        .set('Cookie', session)
+        .then((res) => {
+          expect(res.body).to.equals(false);
+        });
+    });
+  });
+
   describe('Deleting favorites', () => {
     before('Create a new favorite', () => {
       return agent
@@ -448,7 +488,6 @@ describe('Favorites', () => {
           return agent.get('/api/users/user/favoritetesting/fav');
         })
         .then((res) => {
-          console.log(res.body);
           expect(res.body).to.have.lengthOf(0);
         });
     });

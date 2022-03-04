@@ -90,6 +90,25 @@ exports.usersFavList = (req, res, next) => {
     .catch((err) => next(err));
 };
 
+exports.usersFavCheck = (req, res, next) => {
+  let username = req.params.username.toLowerCase();
+  let mediaId = parseInt(req.query.mediaId);
+  let type = req.query.type;
+
+  User.findOne({ where: { username }, include: Favorite })
+    .then((response) => response.dataValues.favorites)
+    .then((favorites) => {
+      let favoriteExist = false;
+
+      favorites.forEach((favorite) => {
+        if (favorite.mediaId === mediaId && favorite.type === type) {
+          favoriteExist = true;
+        }
+      });
+      res.send(favoriteExist);
+    });
+};
+
 exports.usersFavPost = (req, res, next) => {
   const { mediaId, type } = req.body;
   const userId = req.user.dataValues.id;

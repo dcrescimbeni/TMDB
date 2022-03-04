@@ -46,7 +46,7 @@ const Header = () => {
         </Link>
       </div>
       {userDetails.user ? (
-        <div>
+        <ButtonsWrapper>
           <ProfileButtonWrapper>
             <BiUser size={'1.5rem'} color={'#9c1de7'} />
             <ProfileButton onClick={showUserOptions}>
@@ -65,7 +65,7 @@ const Header = () => {
               <OptionButtons onClick={logoutClickHandle}>Logout</OptionButtons>
             </UserOptionsButtonWrapper>
           </UserOptions>
-        </div>
+        </ButtonsWrapper>
       ) : (
         <div>
           <LoginButton onClick={loginClickHandle}>Log in</LoginButton>
@@ -84,14 +84,20 @@ const HeaderWrapper = styled.header`
   align-items: center;
 `;
 
+const ButtonsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+
 const UserOptions = styled.div`
   visibility: ${(props) => props.visible};
   position: absolute;
   background-color: #f6f6f6;
   padding: 15px;
-  margin: 10px;
-  margin-left: -10px;
+  margin-top: 40px;
   border-radius: 10px;
+  width: 150px;
 `;
 
 const Logo = styled.p`

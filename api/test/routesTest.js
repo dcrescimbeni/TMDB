@@ -347,6 +347,12 @@ describe('Favorites', () => {
         });
     });
 
+    afterEach('Delete favorites', () => {
+      return agent
+        .delete('/api/users/user/favoritetesting/fav?mediaId=120&type=movie')
+        .set('Cookie', session);
+    });
+
     it('Should get a favorite', () => {
       return agent.get('/api/users/user/favoritetesting/fav').then((res) => {
         expect(res.body).to.have.lengthOf(1);
@@ -362,15 +368,13 @@ describe('Favorites', () => {
   describe('Adding favorites', () => {
     after(() => {
       return agent
-        .delete('/api/users/user/favoritetesting/fav')
+        .delete('/api/users/user/favoritetesting/fav?mediaId=424694&type=movie')
         .set('Cookie', session)
-        .send({
-          mediaId: 424694,
-          type: 'movie',
-        })
         .then(() => {
           return agent
-            .delete('/api/users/user/favoritetesting/fav')
+            .delete(
+              '/api/users/user/favoritetesting/fav?mediaId=424694&type=tv'
+            )
             .set('Cookie', session)
             .send({
               mediaId: 424694,
@@ -426,19 +430,25 @@ describe('Favorites', () => {
   });
 
   describe('Deleting favorites', () => {
-    it('Should delete a favorite', () => {
+    before('Create a new favorite', () => {
       return agent
-        .delete('/api/users/user/favoritetesting/fav')
+        .post('/api/users/user/favoritetesting/fav')
         .set('Cookie', session)
         .send({
-          mediaId: 120,
+          mediaId: 9999,
           type: 'movie',
-        })
+        });
+    });
+    it('Should delete a favorite', () => {
+      return agent
+        .delete('/api/users/user/favoritetesting/fav?mediaId=9999&type=movie')
+        .set('Cookie', session)
         .expect(200)
         .then(() => {
           return agent.get('/api/users/user/favoritetesting/fav');
         })
         .then((res) => {
+          console.log(res.body);
           expect(res.body).to.have.lengthOf(0);
         });
     });

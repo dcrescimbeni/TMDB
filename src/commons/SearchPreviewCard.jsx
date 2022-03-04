@@ -61,9 +61,12 @@ const Wrapper = styled.div`
 `;
 const CardWrapper = styled.div`
   margin-right: 20px;
+  min-width: 92px;
+  max-width: 92px;
 
   @media (min-width: 630px) {
     min-width: 71px;
+    max-width: 71px;
   }
 `;
 

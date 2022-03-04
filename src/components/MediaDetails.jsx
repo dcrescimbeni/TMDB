@@ -7,6 +7,7 @@ import ScoreAverage from '../commons/ScoreAverage';
 import FavoriteButton from '../commons/FavoriteButton';
 import noPosterAvailable from '../assets/noPosterAvailable.jpg';
 import noBackdropAvailable from '../assets/noBackdropAvailable.jpg';
+import MoreDetails from './MoreDetails';
 
 const MediaDetails = () => {
   const [mediaDetails, setMediaDetails] = useState({});
@@ -83,6 +84,9 @@ const MediaDetails = () => {
             : null}
         </GenresWrapper>
         <Overview>{mediaDetails.overview}</Overview>
+        <MoreDetailsWrapper>
+          <MoreDetails details={mediaDetails} />
+        </MoreDetailsWrapper>
       </OverviewWrapper>
     </Wrapper>
   );
@@ -110,7 +114,6 @@ const BackdropImageWrapper = styled.div`
 const BackdropImage = styled.img`
   position: relative;
   z-index: -2;
-  /*  */
   object-fit: cover;
   height: 99%;
 
@@ -192,10 +195,8 @@ const DetailsWrapper = styled.div`
   width: 100%;
   max-width: 1080px;
   justify-content: space-between;
-  /* align-items: center; */
   padding: 20px;
   top: 300px;
-  /*  */
   max-height: 180px;
   overflow: hidden;
 
@@ -243,6 +244,13 @@ const GenrePill = styled.p`
   background: #d4b4e8;
   color: #9c1de7;
   padding: 5px 15px;
+`;
+
+const MoreDetailsWrapper = styled.div`
+  background-color: #f6f6f6;
+  border-radius: 20px;
+  margin-top: 20px;
+  padding: 20px 10px;
 `;
 
 export default MediaDetails;

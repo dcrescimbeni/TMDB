@@ -65,12 +65,6 @@ const SignUp = () => {
     return errors;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setValidationErrors(validate());
-    setIsSubmitted(true);
-  };
-
   useEffect(() => {
     if (
       validationErrors.username.length === 0 &&
@@ -107,18 +101,28 @@ const SignUp = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [validationErrors, isSubmitted]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setValidationErrors(validate());
+    setIsSubmitted(true);
+  };
+
+  const handleNavigateLogin = () => {
+    navigate('/login');
+  };
+
   return (
     <MainWrapper>
-      <h3>Sign up</h3>
+      <Title>Sign up</Title>
       <form onSubmit={handleSubmit}>
         <FormFieldsWrapper>
-          <label htmlFor="username">Username</label>
+          <Label htmlFor="username">Username</Label>
           <InputField type="text" placeholder="Username" {...username} />
           {validationErrors.username.map((item, index) => {
             return <ErrorMessage key={index}>{item}</ErrorMessage>;
           })}
           <br />
-          <label htmlFor="password">Password</label>
+          <Label htmlFor="password">Password</Label>
           <InputField type="password" placeholder="Password" {...password} />
           <InputField
             type="password"
@@ -129,17 +133,20 @@ const SignUp = () => {
             return <ErrorMessage key={index}>{item}</ErrorMessage>;
           })}
           <br />
-          <label htmlFor="email">Email</label>
+          <Label htmlFor="email">Email</Label>
           <InputField type="text" placeholder="Email" {...email} />
           <InputField type="text" placeholder="Enter again" {...emailAgain} />
           {validationErrors.email.map((item, index) => {
             return <ErrorMessage key={index}>{item}</ErrorMessage>;
           })}
+          <br />
 
-          <div>
+          <ButtonsWrapper>
             <MainButton onClick={handleSubmit}>Sign up</MainButton>
-            <SecondaryButton>Log in</SecondaryButton>
-          </div>
+            <SecondaryButton onClick={handleNavigateLogin}>
+              Log in
+            </SecondaryButton>
+          </ButtonsWrapper>
         </FormFieldsWrapper>
       </form>
     </MainWrapper>
@@ -149,15 +156,42 @@ const SignUp = () => {
 const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 450px;
-  border-radius: 10px;
+  align-items: center;
   background-color: #f6f6f6;
-  padding: 50px;
+  /*  */
+  width: 100%;
+  padding-bottom: 40px;
+
+  @media (min-width: 450px) {
+    max-width: 450px;
+    border-radius: 10px;
+    padding: 50px;
+  }
+`;
+
+const Title = styled.h3`
+  color: #9c1de7;
+  margin: 20px 0px;
+
+  @media (min-width: 450px) {
+    margin-top: 0px;
+  }
 `;
 
 const FormFieldsWrapper = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const Label = styled.label`
+  color: #581b98;
+  font-weight: bold;
+`;
+
+const ButtonsWrapper = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
 `;
 
 const ErrorMessage = styled.p`
@@ -167,6 +201,7 @@ const ErrorMessage = styled.p`
   padding: 5px;
   border-radius: 5px;
   font-size: 0.85rem;
+  max-width: 340px;
 `;
 
 export default SignUp;

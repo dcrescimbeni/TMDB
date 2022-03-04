@@ -78,6 +78,10 @@ const Login = () => {
     setIsSubmitted(true);
   };
 
+  const handleNavigateSignup = () => {
+    navigate('/signup');
+  };
+
   return (
     <MainWrapper>
       <Title>Log in</Title>
@@ -100,7 +104,9 @@ const Login = () => {
           })}
           <ButtonsWrapper>
             <MainButton onClick={handleSubmit}>Log in</MainButton>
-            <SecondaryButton>Sign up</SecondaryButton>
+            <SecondaryButton onClick={handleNavigateSignup}>
+              Sign up
+            </SecondaryButton>
           </ButtonsWrapper>
         </FormFieldsWrapper>
       </form>
@@ -139,6 +145,7 @@ const FormFieldsWrapper = styled.div`
 
 const ButtonsWrapper = styled.div`
   display: flex;
+  flex-direction: row-reverse;
   justify-content: space-between;
 `;
 
@@ -154,6 +161,7 @@ const ErrorMessage = styled.p`
   padding: 5px;
   border-radius: 5px;
   font-size: 0.85rem;
+  max-width: 340px;
 `;
 
 export default Login;

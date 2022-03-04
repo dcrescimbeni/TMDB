@@ -76,7 +76,7 @@ const SearchBar = ({ handleSubmit }) => {
   return (
     <Wrapper
       onFocus={() => setFocusSearchBar(true)}
-      onBlur={() => setFocusSearchBar(true)} //TODO: Change
+      onBlur={() => setFocusSearchBar(false)}
     >
       <form
         autoComplete="off"

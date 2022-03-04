@@ -70,8 +70,8 @@ const Header = () => {
         </div>
       ) : (
         <div>
-          <SecondaryButton onClick={loginClickHandle}>Log in</SecondaryButton>
-          <MainButton onClick={signupClickHandle}>Sign up</MainButton>
+          <LoginButton onClick={loginClickHandle}>Log in</LoginButton>
+          <SignupButton onClick={signupClickHandle}>Sign up</SignupButton>
         </div>
       )}
     </HeaderWrapper>
@@ -92,7 +92,6 @@ const UserOptions = styled.div`
   background-color: #f6f6f6;
   padding: 15px;
   margin: 10px;
-  /* margin-left: -10px; */
   border-radius: 10px;
 `;
 
@@ -144,6 +143,28 @@ const OptionButtons = styled.button`
     cursor: pointer;
     background-color: #e3e3e3;
   }
+`;
+
+const SignupButton = styled.button`
+  background-color: #9c1de7;
+  color: #f6f6f6;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  padding: 2px 15px;
+  margin-left: 10px;
+
+  @media (min-width: 630px) {
+    margin-left: 25px;
+  }
+`;
+
+const LoginButton = styled.button`
+  background-color: transparent;
+  color: #9c1de7;
+  border: none;
+  border-bottom: 2px solid #9c1de7;
+  padding: 2px 10px;
 `;
 
 export default Header;

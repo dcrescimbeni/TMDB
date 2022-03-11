@@ -15,14 +15,15 @@ const AuthContextProvider = ({ children }) => {
   });
 
   useEffect(() => {
+    console.log(isLoggedIn);
     const initialUserDetails = localStorage.getItem('userContext');
     setIsLoggedIn(JSON.parse(initialUserDetails));
   }, []);
 
-  const toggleAuth = (user) => {
+  const toggleAuth = (user, state) => {
     let userDetails = {
       user: user,
-      isAuthenticated: !isLoggedIn.isAuthenticated,
+      isAuthenticated: state,
     };
 
     localStorage.setItem('userContext', JSON.stringify(userDetails));

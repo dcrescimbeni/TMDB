@@ -60,7 +60,7 @@ const Login = () => {
         .then((res) => res.data)
         .then((isAuthenticated) => {
           if (isAuthenticated === 'login successful') {
-            userDetails.toggleAuth(username.value);
+            userDetails.toggleAuth(username.value, true);
             navigate('/');
           } else {
             const errors = initialStateErrors;

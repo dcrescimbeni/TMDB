@@ -24,6 +24,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.get('/test', (req, res, next) => {
+  res.send('working');
+});
+
 app.use('/api', router);
 
 // Error handling middleware

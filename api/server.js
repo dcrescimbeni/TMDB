@@ -39,7 +39,7 @@ app.use((err, req, res, next) => {
 
 db.sync({ force: false }).then(() => {
   if (!module.parent) {
-    app.listen(3001, () => {
+    app.listen(process.env.PORT || 3001, () => {
       console.log(`Server up on port 3001`);
     });
   }

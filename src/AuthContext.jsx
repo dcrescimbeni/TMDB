@@ -18,6 +18,7 @@ const AuthContextProvider = ({ children }) => {
     console.log(isLoggedIn);
     const initialUserDetails = localStorage.getItem('userContext');
     setIsLoggedIn(JSON.parse(initialUserDetails));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toggleAuth = (user, state) => {

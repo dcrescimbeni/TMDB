@@ -43,7 +43,7 @@ const SearchBar = ({ handleSubmit }) => {
       } else {
         axios
           .get(
-            `https://flim-tmdb.herokuapp.com//api/media/search?query=${searchQuery.value}`
+            `https://flim-tmdb.herokuapp.com/api/media/search?query=${searchQuery.value}`
           )
           .then((res) => res.data)
           .then((results) => {

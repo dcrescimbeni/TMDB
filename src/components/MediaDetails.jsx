@@ -23,7 +23,7 @@ const MediaDetails = () => {
   // Get media details
   useEffect(() => {
     axios
-      .get(`/api/media/single/${id}?type=${mediaType}`)
+      .get(`${process.env.SERVER_URL}/api/media/single/${id}?type=${mediaType}`)
       .then((res) => res.data)
       .then((media) => {
         console.log(media);

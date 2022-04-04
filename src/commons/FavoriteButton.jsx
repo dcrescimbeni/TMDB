@@ -31,7 +31,7 @@ const FavoriteButton = ({ mediaId, type, size, mediaList, setMediaList }) => {
     e.preventDefault();
 
     axios
-      .post(`/api/users/user/${user}/fav`, {
+      .post(`${process.env.SERVER_URL}/api/users/user/${user}/fav`, {
         mediaId,
         type,
       })
@@ -42,7 +42,9 @@ const FavoriteButton = ({ mediaId, type, size, mediaList, setMediaList }) => {
     e.preventDefault();
 
     axios
-      .delete(`/api/users/user/${user}/fav?mediaId=${mediaId}&type=${type}`)
+      .delete(
+        `${process.env.SERVER_URL}/api/users/user/${user}/fav?mediaId=${mediaId}&type=${type}`
+      )
       .then((res) => {
         if (mediaList) {
           const newList = mediaList.filter((item) => {

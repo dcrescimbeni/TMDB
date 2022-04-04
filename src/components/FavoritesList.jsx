@@ -14,7 +14,7 @@ const FavoritesList = ({ currentSearch }) => {
 
   useEffect(() => {
     axios
-      .get(`/api/users/user/${username}/fav`)
+      .get(`${process.env.SERVER_URL}/api/users/user/${username}/fav`)
       .then((res) => res.data)
       .then((favorites) => {
         const mediaDetails = favorites.map((item) => {

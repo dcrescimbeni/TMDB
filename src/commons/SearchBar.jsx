@@ -35,12 +35,16 @@ const SearchBar = ({ handleSubmit }) => {
     if (searchQuery.value.length > 3) {
       if (isSearchingUsers) {
         axios
-          .get(`/api/users/search?query=${searchQuery.value}`)
+          .get(
+            `${process.env.SERVER_URL}/api/users/search?query=${searchQuery.value}`
+          )
           .then((res) => res.data)
           .then((users) => setFullSearchResults(users));
       } else {
         axios
-          .get(`/api/media/search?query=${searchQuery.value}`)
+          .get(
+            `${process.env.SERVER_URL}/api/media/search?query=${searchQuery.value}`
+          )
           .then((res) => res.data)
           .then((results) => {
             let filterMovieAndTV = results.filter((result) => {

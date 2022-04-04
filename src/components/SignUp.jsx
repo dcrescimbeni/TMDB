@@ -80,7 +80,7 @@ const SignUp = () => {
         })
         .then((res) => res.data)
         .then((newUser) => {
-          return axios.post('/api/login', {
+          return axios.post(`${process.env.SERVER_URL}/api/login`, {
             username: username.value,
             password: password.value,
           });

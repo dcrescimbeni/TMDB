@@ -73,7 +73,7 @@ const SignUp = () => {
       isSubmitted
     ) {
       axios
-        .post('/api/users/new', {
+        .post(`${process.env.SERVER_URL}/api/users/new`, {
           username: username.value,
           password: password.value,
           email: email.value,

@@ -36,14 +36,14 @@ const SearchBar = ({ handleSubmit }) => {
       if (isSearchingUsers) {
         axios
           .get(
-            `${process.env.SERVER_URL}/api/users/search?query=${searchQuery.value}`
+            `https://flim-tmdb.herokuapp.com/api/users/search?query=${searchQuery.value}`
           )
           .then((res) => res.data)
           .then((users) => setFullSearchResults(users));
       } else {
         axios
           .get(
-            `${process.env.SERVER_URL}/api/media/search?query=${searchQuery.value}`
+            `https://flim-tmdb.herokuapp.com//api/media/search?query=${searchQuery.value}`
           )
           .then((res) => res.data)
           .then((results) => {

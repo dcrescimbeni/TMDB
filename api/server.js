@@ -7,8 +7,11 @@ const db = require('./models/_db');
 require('./models/index');
 const router = require('./routes');
 require('./config/auth'); // Passport configuration
+const cors = require('cors');
 
 const app = express();
+
+app.use(cors());
 
 app.use(volleyball);
 app.use(express.json());

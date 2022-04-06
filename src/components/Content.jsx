@@ -12,7 +12,9 @@ const Content = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.SERVER_URL}/api/media/search?query=${currentSearch}`)
+      .get(
+        `${process.env.REACT_APP_SERVER_URL}/api/media/search?query=${currentSearch}`
+      )
       .then((res) => res.data)
       .then((results) => {
         console.log(results);

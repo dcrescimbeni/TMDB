@@ -53,7 +53,7 @@ const Login = () => {
       isSubmitted
     ) {
       axios
-        .post(`${process.env.SERVER_URL}/api/login`, {
+        .post(`${process.env.REACT_APP_SERVER_URL}/api/login`, {
           username: username.value,
           password: password.value,
         })

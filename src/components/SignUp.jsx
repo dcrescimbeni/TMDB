@@ -73,14 +73,14 @@ const SignUp = () => {
       isSubmitted
     ) {
       axios
-        .post(`${process.env.SERVER_URL}/api/users/new`, {
+        .post(`${process.env.REACT_APP_SERVER_URL}/api/users/new`, {
           username: username.value,
           password: password.value,
           email: email.value,
         })
         .then((res) => res.data)
         .then((newUser) => {
-          return axios.post(`${process.env.SERVER_URL}/api/login`, {
+          return axios.post(`${process.env.REACT_APP_SERVER_URL}/api/login`, {
             username: username.value,
             password: password.value,
           });

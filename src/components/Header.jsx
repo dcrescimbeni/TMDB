@@ -36,7 +36,7 @@ const Header = () => {
     setIsTooltipVisible('hidden');
 
     axios
-      .get(`${process.env.SERVER_URL}/api/logout`)
+      .get(`${process.env.REACT_APP_SERVER_URL}/api/logout`)
       .then(() => userDetails.toggleAuth(null, false));
   };
 

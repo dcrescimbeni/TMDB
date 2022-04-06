@@ -23,6 +23,7 @@ const App = () => {
     <AuthContextProvider>
       <GlobalStyles />
       <Header />
+      {`${process.env.REACT_APP_SERVER_URL}`}
       <GlobalWrapper>
         <Routes>
           <Route

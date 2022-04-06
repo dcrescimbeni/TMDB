@@ -28,7 +28,6 @@ const MediaDetails = () => {
       )
       .then((res) => res.data)
       .then((media) => {
-        console.log(media);
         setMediaDetails(media);
       });
   }, [id, mediaType]);

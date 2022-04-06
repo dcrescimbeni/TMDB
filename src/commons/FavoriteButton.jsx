@@ -18,7 +18,7 @@ const FavoriteButton = ({ mediaId, type, size, mediaList, setMediaList }) => {
     if (user) {
       axios
         .get(
-          `/api/users/user/${user}/fav/check?mediaId=${mediaId}&type=${type}`
+          `${process.env.REACT_APP_SERVER_URL}/api/users/user/${user}/fav/check?mediaId=${mediaId}&type=${type}`
         )
         .then((res) => res.data)
         .then((isInFavorites) => {

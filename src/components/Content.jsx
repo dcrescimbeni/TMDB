@@ -17,7 +17,6 @@ const Content = () => {
       )
       .then((res) => res.data)
       .then((results) => {
-        console.log(results);
         setSearchResults(results);
       });
   }, [currentSearch]);

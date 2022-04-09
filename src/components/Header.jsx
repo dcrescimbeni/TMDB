@@ -5,7 +5,6 @@ import axios from 'axios';
 import { BiUser } from 'react-icons/bi';
 import { BiLogOutCircle } from 'react-icons/bi';
 import { AiFillHeart } from 'react-icons/ai';
-import { BsGithub } from 'react-icons/bs';
 
 import { AuthContext } from '../AuthContext';
 

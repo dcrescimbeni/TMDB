@@ -5,6 +5,7 @@ import axios from 'axios';
 import { BiUser } from 'react-icons/bi';
 import { BiLogOutCircle } from 'react-icons/bi';
 import { AiFillHeart } from 'react-icons/ai';
+import { BsGithub } from 'react-icons/bs';
 
 import { AuthContext } from '../AuthContext';
 
@@ -50,6 +51,14 @@ const Header = () => {
       {userDetails.user ? (
         <ButtonsWrapper>
           <ProfileButtonWrapper>
+            <GithubLink
+              href="https://github.com/dcrescimbeni/TMDB"
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub
+            </GithubLink>
+
             <BiUser size={'1.5rem'} color={'#9c1de7'} />
             <ProfileButton onClick={showUserOptions}>
               {userDetails.user}▼
@@ -70,6 +79,13 @@ const Header = () => {
         </ButtonsWrapper>
       ) : (
         <div>
+          <GithubLink
+            href="https://github.com/dcrescimbeni/TMDB"
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub
+          </GithubLink>
           <LoginButton onClick={loginClickHandle}>Log in</LoginButton>
           <SignupButton onClick={signupClickHandle}>Sign up</SignupButton>
         </div>
@@ -150,6 +166,13 @@ const OptionButtons = styled.button`
     cursor: pointer;
     background-color: #e3e3e3;
   }
+`;
+
+const GithubLink = styled.a`
+  margin-left: 15px;
+  margin-top: 3px;
+  color: #9c1de7;
+  margin-right: 15px;
 `;
 
 const SignupButton = styled.button`

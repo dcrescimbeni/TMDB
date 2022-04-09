@@ -24,20 +24,20 @@ const App = () => {
       <GlobalStyles />
       <Header />
       <GlobalWrapper>
-        <Routes>
-          <Route
-            path={'/'}
-            element={
-              <Slogan>
-                Find <WordAccent>any</WordAccent> movie or TV show
-              </Slogan>
-            }
-          />
-        </Routes>
-
         <SearchBar handleSubmit={handleSubmit} />
-
         <Routes>
+          <Route path="/">
+            <Route
+              index
+              element={
+                <>
+                  <Slogan>
+                    Find <WordAccent>any</WordAccent> movie or TV show
+                  </Slogan>
+                </>
+              }
+            ></Route>
+          </Route>
           <Route path="/media/search" element={<Content />} />
           <Route path="/media/single/:id" element={<MediaDetails />} />
           <Route path="/signup" element={<SignUp />} />
@@ -60,7 +60,7 @@ const GlobalWrapper = styled.div`
 `;
 
 const Slogan = styled.h1`
-  margin: 15px 10px;
+  margin: 65px 10px;
   text-align: center;
 `;
 

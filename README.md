@@ -9,6 +9,7 @@ It was a solo project, developed over 80 hours.
 ## Screenshots
 
 ### Home page
+![home page](https://github.com/dcrescimbeni/TMDB/blob/main/public/screenshots/home.png)
 
 ### Search results
 

@@ -9,20 +9,26 @@ It was a solo project, developed over 80 hours.
 ## Screenshots
 
 ### Home page
+
 ![home page](https://github.com/dcrescimbeni/TMDB/blob/main/public/screenshots/home.png)
 
 ### Search results
 **Desktop**
+
 ![results full](https://github.com/dcrescimbeni/TMDB/blob/main/public/screenshots/results-full.png)
 
 **Mobile**
+
 ![results mobile](https://github.com/dcrescimbeni/TMDB/blob/main/public/screenshots/results-mobile.png)
 
 ### Details
+
 **Desktop**
+
 ![details full](https://github.com/dcrescimbeni/TMDB/blob/main/public/screenshots/details-full.png)
 
 **Mobile**
+
 ![details mobile](https://github.com/dcrescimbeni/TMDB/blob/main/public/screenshots/details-mobile.png)
 
 

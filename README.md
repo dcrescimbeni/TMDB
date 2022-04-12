@@ -4,6 +4,10 @@ Flim! is a fully responsive movie database SPA that allows searching, viewing de
 
 It was a solo project, developed over 80 hours.
 
+Live site:
+
+https://flimtmdb.netlify.app/
+
 ---
 
 ## Screenshots
